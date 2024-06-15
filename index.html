@@ -20,26 +20,139 @@
         </nav>
     </header>
 
-    <form class="search">
-        <input type="type" placeholder="#000" id="search-id">
-        <button class="search-id" type="submit" >Buscar</button>
-    </form>
-
-    <div class="pokedex-container">
-
-        <div class="pokemon-card">
-            <img src="https://avatars.akamai.steamstatic.com/d1a5c3b1e390318e87bf5ab97a3473dd10d76877_full.jpg">
-            <div class="data-pokemon">
-                <h3 id="name-pokemon">Pikasmith</h3>
-                <p id="id">#000</p>
+    
+    <!-- <div class="pokedex">
+        <div class="pokedex-container">    
+            <div class="pokemon-card">
+                <img src="https://avatars.akamai.steamstatic.com/d1a5c3b1e390318e87bf5ab97a3473dd10d76877_full.jpg">
+                <div class="data-pokemon">
+                    <h3 id="name-pokemon">Pikasmith</h3>
+                    <p id="id">#000</p>
+                </div>
+                <div class="buttons">
+                    <button type="button" id="more-info">More info</button>
+                    <button type="button" id="add-to-team">Agregar al team</button>
+                </div>
             </div>
-            <div class="buttons">
-                <button type="button" id="more-info">More info</button>
-                <button type="button" id="add-to-team">Agregar al team</button>
-            </div>
+
         </div>
+    </div> -->
+
+    <main>
+        <div class="search">         
+            <form>
+                <input type="type" placeholder="#000" id="search-id">
+                <button class="search_id" type="submit" >Buscar</button>
+            </form>
+        </div>
+
+        <div class="list_pokemons"> <!-- Pokedex como tal -->
+    
+            <div class="pokemon_container">
+
+                <div class="pokemon_content">
+
+                    <div class="pokemon_img">
+                        <img class="imagen_previa" src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/7.png" alt="Squirtle">
+                    </div>
+                    
+                    <div class="pokemon_info">
+                    
+                        <div class="pokemon_data">
+                            <!-- id == numeber in the pokedex -->
+                            <p class="pokemon_id">#007</p>
+                            <h3 class="pokemon_name">Squirtle</h3>
+                        </div>
+                    
+                        <div class="pokemon_tipos">
+                            <p class="tipo">WATER</p>
+                            <p class="tipo_ground">GROUND</p>
+                        </div>
+                    
+                        <div class="pokemon_buttons">
+                            <button class="btn agregar-equipo">Agregar a equipo</button>
+                            <button class="btn ver-estadisticas">Ver estadísticas</button>
+                        </div>
+                   
+                    </div>
+               
+                </div>
+            </div>
+            
+            <!-- Pruebas --> 
+                <div class="pokemon_container">
+                    <div class="pokemon_content">
+                        <div class="pokemon_img">
+                            <img class="imagen_previa" src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/8.png" alt="Wartortle">
+                        </div>
+                        <div class="pokemon_info">
+                            <div class="nombre_contenedor">
+                                <p class="pokemon_id">#008</p>
+                                <h3 class="card_title">Wartortle</h3>
+                            </div>
+                            <div class="pokemon_tipos">
+                                <p class="tipo_water">Water</p>
+                            </div>
+                            <div class="pokemon_buttons">
+                                <button class="btn agregar_equipo">Agregar a equipo</button>
+                                <button class="btn ver_estadisticas">Ver estadísticas</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
         
-    </div>
+                <div class="pokemon_container">
+                    <div class="pokemon_content">
+                        <div class="pokemon_img">
+                            <img class="imagen_previa" src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/9.png" alt="Blastoise">
+                        </div>
+                        <div class="pokemon_info">
+                            <div class="nombre_contenedor">
+                                <p class="pokemon_id">#009</p>
+                                <h3 class="card_title">Blastoise</h3>
+                            </div>
+                            <div class="pokemon_tipos">
+                                <p class="tipo_water">Water</p>
+                            </div>
+                            <div class="pokemon_buttons">
+                                <button class="btn agregar_equipo">Agregar a equipo</button>
+                                <button class="btn ver_estadisticas">Ver estadísticas</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+        
+                <div class="pokemon_container">
+                    <div class="pokemon_content">
+                        <div class="pokemon_img">
+                            <img class="imagen_previa" src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/6.png" alt="Charizard">
+                        </div>
+                        <div class="pokemon_info">
+                            <div class="nombre_contenedor">
+                                <p class="pokemon_id">#006</p>
+                                <h3 class="card_title">Charizard</h3>
+                            </div>
+                            <div class="pokemon_tipos">
+                                <p class="tipo_fire">Fire</p>
+                                <p class="tipo_flying">Flying</p>
+                            </div>
+                            <div class="pokemon_buttons">
+                                <button class="btn agregar_equipo">Agregar a equipo</button>
+                                <button class="btn ver_estadisticas">Ver estadísticas</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+
+
+            <!--  More Pokemons -->
+        </div>
+    </main>
+    
+    </main>
+
 
 </body>
 
