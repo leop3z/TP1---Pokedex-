@@ -67,7 +67,7 @@ function create_pokemon(pokemons) {
         nombre_contenedor.append(card_title)
         info_pokemon.append(nombre_contenedor)
         info_pokemon.append(pokemon_buttons, tipo_pokemon)
-        pokemon_content.append(img)
+        pokemon_content.append(imagen_pokemon)
         pokemon_content.append(info_pokemon)
         container.append(pokemon_content)
         pokemonList.append(container)
@@ -77,3 +77,5 @@ fetch('https://pokeapi.co/api/v2/pokemon?limit=151')
     .then(data => data.json())
     .then(create_pokemon)
     .catch(err => console.error(err));
+
+
