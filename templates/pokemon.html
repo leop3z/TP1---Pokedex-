@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pokemon Details</title>
+    <link rel="stylesheet" href="/template/css/styles.css">
+    <script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
+</head>
+
+<body>
+    <header>
+        <div class="container header">
+            <div class="row">
+                <img class="header__logo" id="header__home" src="" alt="Logo">
+            </div>
+        </div>
+    </header>
+
+    <section class="pokemon_details">
+        <div class="container">
+            <div class="pokemon__header">
+                <h1 id="pokemon_name" class="pokemon__name"></h1>
+                <div class="pokemon_img">
+                    <img id="pokemon_image" src="" alt="Pokemon Image">
+                </div>
+            </div>
+            <div class="pokemon_content">
+                <p id="pokemon_description" class="pokemon__description"></p>
+                <div class="pokemon__features">
+                    <p id="pokemon_height" class="pokemon__height"></p>
+                    <p id="pokemon_weight" class="pokemon__weight"></p>
+                </div>
+                <div id="chartContainer"></div>
+            </div>
+        </div>
+    </section>
+
+    <script src="/template/js/pokemon.js"></script>
+</body>
+
+</html>
