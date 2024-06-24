@@ -34,7 +34,7 @@ function create_pokemon(pokemons) {
 
         const pokemon_id = document.createElement("p")
         pokemon_id.setAttribute("id", "pokemon_id")
-        pokemon_id.textContent = `#00${i+1}`
+        pokemon_id.textContent = `#${i+1}`
 
         const card_title = document.createElement("h3")
         card_title.setAttribute("id", "card_title")
@@ -73,9 +73,14 @@ function create_pokemon(pokemons) {
         pokemonList.append(container)
     })
 }
-fetch('https://pokeapi.co/api/v2/pokemon?limit=151')
+const info_pokemon = fetch('https://pokeapi.co/api/v2/pokemon?limit=151')
     .then(data => data.json())
     .then(create_pokemon)
     .catch(err => console.error(err));
 
 
+
+function search_pokemon(){
+    let input_Id = document.getElementById("search-id")
+    let nombre_pokemon = document.getElementById(input_Id).value.toLowerCase()
+}
