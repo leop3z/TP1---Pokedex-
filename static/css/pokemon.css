@@ -1,0 +1,137 @@
+:root {
+  --dark-cyan: hsl(185, 75%, 39%);
+  --very-dark-desaturated_blue: hsl(229, 23%, 23%);
+  --dark-grayish-blue: hsl(227, 10%, 46%);
+  --dark-gray: hsl(0, 0%, 59%);
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  color: var(--black);
+  font-family: "Kumbh Sans";
+}
+
+body {
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  background-color: var(--dark-cyan);
+}
+
+header {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 32px;
+  max-width: 1000px;
+  margin: 0 auto;
+  box-sizing: border-box;
+  background-color: var(--very-dark-desaturated_blue);
+  color: azure;
+}
+
+.title{
+    font-family: sans-serif;
+    width: 300px;
+    text-align: center;
+    box-sizing: border-box;
+    font-size: 36px;
+}
+
+.other-pages{
+    height: 40px;
+}
+
+.links{
+    box-sizing: content-box;
+    display: flex;
+    list-style: none;
+}
+
+.page{
+    padding: 10px;
+    margin: 5px;
+    font-size: 18px;
+}
+.page:hover{
+    transform: scale(1.1);
+}
+
+a{  
+    text-decoration: none;
+    font-family: sans-serif;
+}
+main {
+  padding: 32px;
+  max-width: 1000px;
+  margin: 0 auto;
+  min-height: 100vh;
+  background-color: var(--very-dark-desaturated_blue);
+}
+
+.container {
+  width: 400px;
+  height: 540px;
+  border-radius: 5%;
+  margin: auto;
+  background-color: white;
+  box-sizing: border-box;
+  overflow: hidden;
+  position: relative;
+}
+
+
+.pokemon__header h1 {
+  text-align: center;
+  text-transform: uppercase;
+  padding: 10px;
+  background-color: var(--dark-cyan);
+}
+
+.pokemon_img {
+  display: flex;
+  justify-content: center;
+  background-color: var(--dark-cyan);
+}
+
+.pokemon_img img {
+  max-width: 100%;
+  background-color: white;
+  margin-bottom: 15px;
+}
+
+#pokemon_image {
+  border-radius: 50%;
+  width: 200px;
+  padding: 10px;
+}
+
+.pokemon_content {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 0 16px 0 16px;
+  background-color: white;
+}
+
+#pokemon_description {
+  padding-top: 10px;
+  padding-bottom: 10px;
+  text-align: justify;
+  box-sizing: border-box;
+}
+
+#pokemon_height {
+  box-sizing: border-box;
+  padding: 5px;
+}
+
+#pokemon_weight {
+  padding: 5px;
+  box-sizing: border-box;
+}

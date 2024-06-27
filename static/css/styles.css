@@ -1,5 +1,16 @@
+:root {
+    --black: #1c1c1c;
+    --gray: #ececec;
+    --white: #f7f7f7;
+    --shadow: rgba(0, 0, 0, 0.25);
+    --dark-cyan: hsl(185, 75%, 39%);
+    --very-dark-desaturated_blue: hsl(229, 23%, 23%);
+    --dark-grayish-blue: hsl(227, 10%, 46%);
+    --dark-gray: hsl(0, 0%, 59%);
+}
+
 body{
-    background-color: rgba(121, 63, 70, 0.596);
+    background-color: var(--dark-cyan);
     width: 100%;
     height: 100%;
     margin: 0;
@@ -7,7 +18,7 @@ body{
 }
 
 header{
-    background-color: antiquewhite;
+    background-color: var(--very-dark-desaturated_blue);
     width: 100%;
     height: 100%;
     display: flex;
@@ -24,21 +35,27 @@ header{
     width: 300px;
     text-align: center;
     box-sizing: border-box;
+    color: white;
+
 }
 
 .other-pages{
     height: 40px;
+    
 }
 
 .links{
     box-sizing: content-box;
     display: flex;
     list-style: none;
+    
 }
 
 .page{
     padding: 10px;
     margin: 5px;
+    font-size: 18px;
+    
 }
 .page:hover{
     transform: scale(1.1);
@@ -47,6 +64,8 @@ header{
 a{  
     text-decoration: none;
     font-family: sans-serif;
+    color: white;
+
 }
 
 
@@ -67,12 +86,7 @@ a{
 
 /* Cards */
 /* 1.0rem == 1.0em == 16px */
-:root {
-    --black: #1c1c1c;
-    --gray: #ececec;
-    --white: #f7f7f7;
-    --shadow: rgba(0, 0, 0, 0.25);
-}
+
 
 * {
     margin: 0;
@@ -93,7 +107,7 @@ main {
     max-width: 1000px;
     margin: 0 auto;
     min-height: 100vh;
-    background-color: antiquewhite;
+    background-color: var(--very-dark-desaturated_blue)
 }
 
 .list_pokemons {
@@ -230,3 +244,5 @@ main {
     border-width: 2px;
     border-style: solid;
 }
+
+
