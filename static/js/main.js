@@ -81,9 +81,8 @@ fetch('https://pokeapi.co/api/v2/pokemon?limit=151')
     .catch(err => console.error(err));
 
 const input = document.getElementById("search-id");
-const button = document.getElementById("search_form")
+const button = document.querySelector(".search_id")
 
-button.addEventListener("submit", search_pokemon);
 function search_pokemon(event) {
     event.preventDefault() //Previene que se recargue la pagina
     const search_id = parseInt(input.value)
@@ -92,5 +91,4 @@ function search_pokemon(event) {
     create_pokemon({ results: pokemon_filtered }, true)
 }
 
-
-
+button.addEventListener("click", search_pokemon);
