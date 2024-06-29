@@ -1,79 +1,61 @@
 document.addEventListener("DOMContentLoaded", () => {
+    // Obtener el ID(Nombre o n° pokedex) del Pokemon de los parámetros de la URL
     const urlParams = new URLSearchParams(window.location.search);
     const pokemonId = urlParams.get('id');
+
+    // URL para obtener los datos del Pokémon
     const urlPokemons = `https://pokeapi.co/api/v2/pokemon/${pokemonId}`;
     const urlInfoPokemons = `https://pokeapi.co/api/v2/pokemon-species/${pokemonId}`;
-    const urlImgPokemonFull = "https://assets.pokemon.com/assets/cms2/img/pokedex/full/";
 
-    console.log("Fetching Pokémon data from URL:", urlPokemons);
-
+    // Hacer la solicitud a la POKEAPI para obtener los datos del Pokémon
     fetch(urlPokemons)
-        .then(response => {
-            console.log("API response status:", response.status);
-            if (!response.ok) {
-                throw new Error('Network response was not ok ' + response.statusText);
-            }
-            return response.json();
+        .then(response => response.json())
+        .then(pokemon => {
+            // Construir la URL completa de la imagen del Pokémon
+            const imageUrl = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${pokemon.id}.png`;
+
+            // Asignar la URL de la imagen al elemento de la imagen
+            document.getElementById('pokemon_image').src = imageUrl;
+
+            // Asignar otros detalles del Pokemon
+            document.getElementById('pokemon_name').innerText = pokemon.name;
+            document.getElementById('pokemon_height').innerText = `Height: ${pokemon.height / 10}m`;
+            document.getElementById('pokemon_weight').innerText = `Weight: ${pokemon.weight / 10}kg`;
+
+            // Mostrar los tipos del Pokemon
+            const types = pokemon.types.map(type => type.type.name).join(', ');
+            document.getElementById('pokemon_types').innerText = types;
+
+            // Crear una tabla con los detalles de las estadísticas del Pokémon
+            createPokemonTable(pokemon);
+
+            // Obtener la descripción del Pokémon desde la POKEAPI de especies
+            fetch(urlInfoPokemons)
+                .then(response => response.json())
+                .then(speciesData => {
+                    const descriptionEntry = speciesData.flavor_text_entries.find(entry => entry.language.name === 'en');
+                    const description = descriptionEntry ? descriptionEntry.flavor_text : 'No description available.';
+                    document.getElementById('pokemon_description').innerText = description;
+                });
         })
-        .then(data => {
-            console.log("Pokémon data:", data);
-            displayPokemonDetails(data);
-            fetchPokemonDescription();
-        })
-        .catch(error => console.error('Error fetching Pokémon:', error));
-
-    function displayPokemonDetails(pokemon) {
-        console.log("Displaying Pokémon details for:", pokemon.name);
-        document.getElementById('pokemon_name').innerText = pokemon.name;
-        document.getElementById('pokemon_image').src = urlImgPokemonFull + pad(pokemon.id, 3) + '.png';
-        document.getElementById('pokemon_height').innerText = `Height: ${pokemon.height / 10}m`;
-        document.getElementById('pokemon_weight').innerText = `Weight: ${pokemon.weight / 10}kg`;
-
-        const stats = pokemon.stats.map(stat => ({
-            y: stat.base_stat,
-            label: stat.stat.name
-        }));
-
-        const chart = new CanvasJS.Chart("chartContainer", {
-            animationEnabled: true,
-            theme: "light1",
-            backgroundColor: "transparent",
-            axisY: {
-                title: "",
-            },
-            data: [
-                {
-                    type: "column",
-                    dataPoints: stats,
-                },
-            ],
-        });
-        chart.render();
-    }
-
-    function fetchPokemonDescription() {
-        console.log("Fetching Pokémon description from URL:", urlInfoPokemons);
-        fetch(urlInfoPokemons)
-            .then(response => {
-                console.log("API response status:", response.status);
-                if (!response.ok) {
-                    throw new Error('Network response was not ok ' + response.statusText);
-                }
-                return response.json();
-            })
-            .then(data => {
-                console.log("Pokémon description data:", data);
-                const description = data.flavor_text_entries.find(entry => entry.language.name === 'en');
-                document.getElementById('pokemon_description').innerText = description ? description.flavor_text : 'No description available.';
-            })
-            .catch(error => console.error('Error fetching Pokémon description:', error));
-    }
-
-    function pad(number, length) {
-        let str = '' + number;
-        while (str.length < length) {
-            str = '0' + str;
-        }
-        return str;
+    
+    // Ayuda extrema de videos, tutoriales y chat (explote con ese JS en general)
+    function createPokemonTable(pokemon) {
+        const table = document.getElementById('pokemon_table');
+        const tableHTML = `
+            <table>
+                <tr>
+                    <th>Stats</th>
+                    <th>Base Stat</th>
+                </tr>
+                ${pokemon.stats.map(stat => `
+                    <tr>
+                        <td>${stat.stat.name}</td>
+                        <td>${stat.base_stat}</td>
+                    </tr>
+                `).join('')}
+            </table>
+        `;
+        table.innerHTML = tableHTML;
     }
 });

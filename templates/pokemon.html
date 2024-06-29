@@ -6,7 +6,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Pokemon Details</title>
     <link rel="stylesheet" href="/static/css/pokemon.css">
-    <link href="https://fonts.googleapis.com/css2?family=Kumbh+Sans:wght@400;700&display=swap" rel="stylesheet">
     <script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
 </head>
 
@@ -15,7 +14,7 @@
         <h1 class="title">Pokedex</h1>
         <nav class="other-pages">
             <ul class="links">
-                <li class="page"><a href="https://promiedos.com.ar" target="_blank">Inicio</a></li>
+                <li class="page"><a href="/" target="_blank">Inicio</a></li>
                 <li class="page"><a href="https://promiedos.com.ar" target="_blank">Equipos creados</a></li>
                 <li class="page"><a href="https://promiedos.com.ar" target="_blank">LINK A OTRA COSA</a></li>
             </ul>
@@ -25,23 +24,26 @@
     <main class="pokemon_details">
         <div class="container">
             <div class="pokemon__header">
-                <h1 id="pokemon_name" class="pokemon__name">Bulbasaur</h1>
+                <h1 id="pokemon_name" class="pokemon__name">Nombre del Pokémon</h1>
                 <div class="pokemon_img">
-                    <img id="pokemon_image"
-                        src="https://www.pokemon.com/static-assets/content-assets/cms2/img/pokedex/full/001.png"
-                        alt="Pokemon Image">
+                    <img id="pokemon_image" src="" alt="Pokemon Image">
                 </div>
             </div>
             <div class="pokemon_content">
-                <p id="pokemon_description" class="pokemon__description">Lorem, ipsum dolor sit amet consectetur adipisicing elit. Quibusdam temporibus eaque quidem quod debitis, quos nobis incidunt ducimus nesciunt illo adipisci dignissimos, porro libero eligendi minima iure repellat dolorem recusandae.</p>
-                <div class="pokemon__features">
-                    <p id="pokemon_height" class="pokemon__height">Alt: 120m</p>
-                    <p id="pokemon_weight" class="pokemon__weight">Weight: 500kg</p>
+                <div class="pokemon__description">
+                    <div id="pokemon_description">Descripción del Pokémon aquí.</div>
                 </div>
-                <div id="chartContainer"></div>
+                <div class="pokemon__features">
+                    <div class="pokemon__height" id="pokemon_height">Altura: 0.7m</div>
+                    <div class="pokemon__weight" id="pokemon_weight">Peso: 6.9kg</div>
+                    <div class="pokemon__types" id="pokemon_types">Tipos del Pokémon aquí.</div>
+                </div>
+                <div class="pokemon__table" id="pokemon_table">
+                    <!-- Aquí va la tabla con más detalles -->
+                </div>
             </div>
         </div>
-    <main/>
+    </main>
 
     <script src="/static/js/pokemon.js"></script>
 </body>
