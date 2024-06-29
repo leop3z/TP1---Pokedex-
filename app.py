@@ -1,4 +1,4 @@
-from flask import Flask, jsonify, render_template
+from flask import Flask, jsonify, render_template, request
 import requests
 
 app = Flask(__name__)
@@ -10,9 +10,14 @@ def index():
 
 
 # Ruta para obtener detalles de un Pokémon por ID
-@app.route('/pokemon/<int:pokemon_id>', methods=['GET'])
-def get_pokemon(pokemon_id):
+@app.route('/pokemon', methods=['GET'])
+def get_pokemon():
     try:
+        # Obtener el ID del Pokémon desde el parámetro de consulta
+        pokemon_id = request.args.get('id')
+        if not pokemon_id:
+            return jsonify({"error": "ID de Pokémon no proporcionado."}), 400
+
         # URL base de la PokeAPI
         base_url = "https://pokeapi.co/api/v2/pokemon/"
 
@@ -29,17 +34,14 @@ def get_pokemon(pokemon_id):
             # Extraer la información relevante del Pokémon
             pokemon_details = {
                 "id": pokemon_data['id'],
-                "name": pokemon_data['name'],
-                "height": pokemon_data['height'],
-                "weight": pokemon_data['weight'],
-                "stats": pokemon_data['stats'],
-                "types": [type_data['type']['name'] for type_data in pokemon_data['types']]
+                "name": pokemon_data['name']
             }
 
-            return jsonify(pokemon_details)
+            # Renderizar el template pokemon.html con los detalles del Pokémon
+            return render_template('pokemon.html', pokemon=pokemon_details)
 
         else:
-            return jsonify({"error": "Pokémon not found."}), 404
+            return jsonify({"error": "Pokémon no encontrado."}), 404
 
     except Exception as e:
         return jsonify({"error": str(e)}), 500
