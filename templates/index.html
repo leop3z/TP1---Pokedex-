@@ -6,6 +6,16 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="/static/css/styles.css">
     <title>Pokedex't</title>
+    <script>
+        function redirect_pokemon_page() {
+            event.preventDefault();
+            let pokemonId = document.getElementById('search-id').value.toLowerCase().trim();
+            // Por lo que estuve investigando, no era n°s, caracter o strings no debería de entrar
+            if (pokemonId) {
+                window.location.href = `/pokemon?id=${pokemonId}`;
+            }
+        }
+    </script>
 </head>
 
 <body>
@@ -22,8 +32,8 @@
 
     <main>
         <div class="search">
-            <form>
-                <input type="search" placeholder="#000" id="search-id">
+            <form onsubmit="redirect_pokemon_page()">
+                <input type="search" placeholder="#001" id="search-id">
                 <button class="search_id" type="submit">Buscar</button>
             </form>
         </div>
@@ -35,5 +45,4 @@
     <script src="/static/js/main.js"></script>
 
 </body>
-
-</html>
+</html

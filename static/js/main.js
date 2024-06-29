@@ -54,11 +54,20 @@ function create_pokemon(pokemons) {
 
         const agregar_equipo = document.createElement("button")
         agregar_equipo.setAttribute("class", "btn agregar_equipo")
-        agregar_equipo.textContent = 'Agregar al equipo'
+        agregar_equipo.textContent = "Agregar al equipo"
 
         const ver_stats = document.createElement("button")
         ver_stats.setAttribute("class", "btn ver_estadisticas")
         ver_stats.textContent = "Ver estadisticas"
+        
+        // Agregamos el evento clic para redirigir al usuario
+        // Forma más concisa de definir funciones en JS, utilizando:
+        // la sintaxis (params) => { cuerpo de la función }
+        // P.D: Intente definir una función afuera, pero no me funcionaba, buscando encontré esto
+        // Funcionó así que así quedo
+        ver_stats.addEventListener("click", () => {
+            window.location.href = `/pokemon?id=${i + 1}`;
+        });
 
         pokemon_buttons.append(agregar_equipo,ver_stats)
         imagen_pokemon.append(img)
@@ -77,10 +86,3 @@ const info_pokemon = fetch('https://pokeapi.co/api/v2/pokemon?limit=151')
     .then(data => data.json())
     .then(create_pokemon)
     .catch(err => console.error(err));
-
-
-
-function search_pokemon(){
-    let input_Id = document.getElementById("search-id")
-    let nombre_pokemon = document.getElementById(input_Id).value.toLowerCase()
-}
