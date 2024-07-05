@@ -9,10 +9,10 @@
     <script>
         function redirect_pokemon_page() {
             event.preventDefault();
-            let pokemonId = document.getElementById('search-id').value.toLowerCase().trim();
+            let pokemon_id = document.getElementById('search-id').value.toLowerCase().trim();
             // Por lo que estuve investigando, no era n°s, caracter o strings no debería de entrar
-            if (pokemonId) {
-                window.location.href = `/pokemon?id=${pokemonId}`;
+            if (pokemon_id) {
+                window.location.href = `/pokemon?id=${pokemon_id}`;
             }
         }
     </script>
@@ -23,8 +23,8 @@
         <h1 class="title">Pokedex</h1>
         <nav class="other-pages">
             <ul class="links">
-                <li class="page"><a href="https://promiedos.com.ar" target="_blank">Inicio</a></li>
-                <li class="page"><a href="https://promiedos.com.ar" target="_blank">Equipos creados</a></li>
+                <li class="page"><a href="/" target="_blank">Inicio</a></li>
+                <li class="page"><a href="/team" target="_blank">Crear Equipos</a></li>
                 <li class="page"><a href="https://promiedos.com.ar" target="_blank">LINK A OTRA COSA</a></li>
             </ul>
         </nav>
@@ -33,8 +33,8 @@
     <main>
         <div class="search">
             <form onsubmit="redirect_pokemon_page()">
-                <input type="search" placeholder="#001" id="search-id">
-                <button class="search_id" type="submit">Buscar</button>
+                <input type="search" placeholder="1 or Pikachu" id="search-id">
+                <button class="search_id" type="submit">Search</button>
             </form>
         </div>
 
