@@ -15,4 +15,11 @@ __pycache__/
 Thumbs.db
 
 # Ignorar archivos de dependencias
-requirements.txt
+requirements.txtenv/
+venv/
+*.pyc
+__pycache__/
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
