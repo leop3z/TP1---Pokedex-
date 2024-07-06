@@ -101,6 +101,8 @@ document.addEventListener("DOMContentLoaded", () => {
     // Guardar el equipo en la base de datos
     save_btn_team.addEventListener('click', () => {
         const team_name = team_name_import.value.trim();
+        console.log(team_name)
+        console.log(team)
         if (team.length > 0 && team_name) {
             fetch('/team', {
                 method: 'POST',
@@ -112,10 +114,10 @@ document.addEventListener("DOMContentLoaded", () => {
                     pokemon_data: team.map(pokemon => ({ id: pokemon.id, name: pokemon.name })),
                 }),
             })
-            .then(response => response.json())
-            .then(data => {
-                if (data.success) {
-                    alert('Team saved successfully');
+            .then(response => {
+                console.log(response)
+                if (response.status == 201) {
+                    alert(response.bo);
                 } else {
                     alert('Error saving team. Please try again.');
                 }

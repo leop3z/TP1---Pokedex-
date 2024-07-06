@@ -4,8 +4,8 @@ import requests
 
 app = Flask(__name__)
 
-# Configuración de la base de datos, sacado del articulo, (pequeña validación)
-app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://pokemon_user:password@localhost/pokemon_teams'
+# Configuración de la base de datos
+app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://pokemon_user:password@localhost:5432/pokemon_teams'
 db = SQLAlchemy(app)
 
 # Ruta para la página principal
@@ -51,13 +51,15 @@ def get_pokemon():
     except Exception as e:
         return jsonify({"error": str(e)}), 500
 
-# Todo realacionado a Team
-
 # Definición de los modelos
+
 class PokemonTeam(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(100), nullable=False)
     pokemon_data = db.Column(db.JSON)
+
+with app.app_context():
+    db.create_all()
 
 # Métodos CRUD
 @app.route('/team', methods=['GET'])
@@ -73,19 +75,34 @@ def create_team():
         db.session.add(new_team)
         db.session.commit()
         return jsonify(message='Team created successfully'), 201
-    except :
-        return jsonify(message='Error creating team'), 500
+    except Exception as e:
+        return jsonify(message=f'Error creating team: {str(e)}'), 500
     
 # GET = Obtener
 @app.route('/team/<int:team_id>', methods=['GET'])
 def get_team(team_id):
     team = PokemonTeam.query.get_or_404(team_id)
-    # Como prueba el jsonify
     return jsonify({
         'id': team.id,
         'name': team.name,
-        'pokemons': [{'id': p.id, 'name': p.name} for p in team.pokemons]
+        'pokemons': [{'id': p['id'], 'name': p['name']} for p in team.pokemon_data]
     })
+
+# Nueva ruta para obtener todos los equipos
+@app.route('/teams', methods=['GET'])
+def get_all_teams():
+    try:
+        teams = PokemonTeam.query.all()
+        teams_list = []
+        for team in teams:
+            teams_list.append({
+                'id': team.id,
+                'name': team.name,
+                'pokemons': [{'id': p['id'], 'name': p['name']} for p in team.pokemon_data]
+            })
+        return jsonify(teams_list), 200
+    except Exception as e:
+        return jsonify(message=f'Error fetching teams: {str(e)}'), 500
 
 # PUT = Actualizar
 @app.route('/team/<int:team_id>', methods=['PUT'])
@@ -93,9 +110,8 @@ def update_team(team_id):
     team = PokemonTeam.query.get_or_404(team_id)
     data = request.json
     team.name = data.get('name', team.name)
-    team.pokemon_ids = data.get('pokemon_ids', team.pokemon_ids)
+    team.pokemon_data = data.get('pokemon_data', team.pokemon_data)
     db.session.commit()
-    # Como prueba el jsonify
     return jsonify(message='Team updated successfully')
 
 # DELETE = Borrar
@@ -104,7 +120,6 @@ def delete_team(team_id):
     team = PokemonTeam.query.get_or_404(team_id)
     db.session.delete(team)
     db.session.commit()
-    # Como prueba el jsonify
     return jsonify(message='Team deleted successfully')
 
 if __name__ == '__main__':
