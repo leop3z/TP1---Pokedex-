@@ -149,7 +149,6 @@ main {
 .pokemon_img img {
     width: 100%;
     max-width: 120px;
-    border-radius: 50%;
 }
 
 .pokemon_content {
