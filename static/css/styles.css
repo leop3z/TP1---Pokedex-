@@ -9,65 +9,65 @@
     --dark-gray: hsl(0, 0%, 59%);
 }
 
-body{
-    background-color: var(--dark-cyan);
+body {
     width: 100%;
     height: 100%;
     margin: 0;
     padding: 0;
+    background-color: var(--dark-cyan);
+    color: var(--white);
 }
 
-header{
-    background-color: var(--very-dark-desaturated_blue);
+header {
     width: 100%;
-    height: 100%;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 32px 32px 0 32px;
+    padding: 32px;
     max-width: 1000px;
     margin: 0 auto;
-    box-sizing: border-box;
+    background-color: var(--very-dark-desaturated_blue);
+    color: var(--white);
 }
 
-.title{
-    font-family: sans-serif;
-    width: 300px;
+.title {
     text-align: center;
-    box-sizing: border-box;
+    font-size: 36px;
+    padding-left: 60px;
+    text-transform: uppercase;
+    letter-spacing: 2px;
     color: white;
-
 }
 
 .other-pages{
-    height: 40px;
-    
+    height: 60px;
 }
 
 .links{
-    box-sizing: content-box;
     display: flex;
     list-style: none;
-    
+    box-sizing: border-box;
 }
 
 .page{
     padding: 10px;
-    margin: 5px;
+    margin: 8px;
     font-size: 18px;
-    
+    border-radius: 10px;
+    background-color: var(--dark-cyan);
+    transition: transform 0.2s;
 }
+
 .page:hover{
     transform: scale(1.1);
+    
 }
 
 a{  
     text-decoration: none;
     font-family: sans-serif;
     color: white;
-
 }
-
 
 .search{
     padding: 20px;
@@ -93,6 +93,8 @@ a{
     padding: 0;
     box-sizing: border-box;
     color: var(--black);
+    font-family: "Kumbh Sans", sans-serif;
+    text-decoration: none;
 }
 
 button {
@@ -107,7 +109,7 @@ main {
     max-width: 1000px;
     margin: 0 auto;
     min-height: 100vh;
-    background-color: var(--very-dark-desaturated_blue)
+    background-color: var(--very-dark-desaturated_blue);
 }
 
 .list_pokemons {
@@ -147,6 +149,7 @@ main {
 .pokemon_img img {
     width: 100%;
     max-width: 120px;
+    border-radius: 50%;
 }
 
 .pokemon_content {
@@ -215,8 +218,6 @@ main {
     box-shadow: 0 0 64px var(--shadow);
 }
 
-
-
 .search{
     width: max-content;
     text-align: center;
@@ -224,7 +225,6 @@ main {
     margin: auto;
     display: block;
 }
-
 
 #search-id{
     border-radius: 15px;
@@ -235,14 +235,24 @@ main {
     padding: 0 10px 0 10px;
 }
 
-.search_id{
-    border-radius: 5px;
-    border-color: #1c1c1c3a;
-    height: auto;
-    background-color: #ececec;
-    padding: 6px;
-    border-width: 2px;
-    border-style: solid;
+.search_id {
+    background-color: var(--dark-cyan);
+    padding: 10px;
+    border-radius: 10px;
+    color: var(--white);
+    transition: background-color 0.3s;
+    margin: 0 5px 0 5px;
 }
 
+.search_id:hover{
+    background-color: var(--dark-grayish-blue);
+}
+
+#team-dropdown{
+    font-size: 18px;
+    background-color: transparent;
+    transition: transform 0.2s;
+    border: none;
+    color: white;
+}
 
