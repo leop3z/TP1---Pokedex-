@@ -1,88 +1,123 @@
+// Obtener la lista de equipos y llenar el dropdown
+fetch('/teams')
+    .then(response => response.json())
+    .then(teams => {
+        const dropdown = document.getElementById('team-dropdown');
+        dropdown.innerHTML = '';
+        if (teams.length === 0) {
+            const option = document.createElement('option');
+            option.value = '';
+            option.textContent = 'Vaya a crear equipos';
+            dropdown.appendChild(option);
+        } else {
+            teams.forEach(team => {
+                const option = document.createElement('option');
+                option.value = team.id;
+                option.textContent = team.name;
+                dropdown.appendChild(option);
+            });
+        }
+    })
+    .catch(err => console.error('Error fetching teams:', err));
+
 function data_pokemon(response) {
     return response.json();
 }
 
 function create_pokemon(pokemons) {
-    const pokemonList = document.querySelector(".list_pokemons")
+    const pokemonList = document.querySelector(".list_pokemons");
 
     pokemons.results.forEach((pokemon, i) => {
-        // Crear contenedor de la carta del Pokémon
+        const container = document.createElement("div");
+        container.setAttribute("class", "pokemon_container");
 
-        const container = document.createElement("div")
-        container.setAttribute("class", "pokemon_container")
+        const pokemon_content = document.createElement("div");
+        pokemon_content.setAttribute("class", "pokemon_content");
 
-        const pokemon_content = document.createElement("div")
-        pokemon_content.setAttribute("class", "pokemon_content")
+        const imagen_pokemon = document.createElement("div");
+        imagen_pokemon.setAttribute("class", "pokemon_img");
 
-        // Imagen de los pokemones
+        const img = document.createElement("img");
+        img.setAttribute("class", "imagen_previa");
+        img.setAttribute("src", `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${i + 1}.png`);
+        img.setAttribute("alt", pokemon.name);
 
-        const imagen_pokemon = document.createElement("div")
-        imagen_pokemon.setAttribute("class", "pokemon_img")
+        const info_pokemon = document.createElement("div");
+        info_pokemon.setAttribute("class", "pokemon_info");
 
-        const img = document.createElement("img")
-        img.setAttribute("class", "imagen_previa")
-        img.setAttribute("src", `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${i+1}.png`)
-        img.setAttribute("alt", pokemon.name)
+        const nombre_contenedor = document.createElement("div");
+        nombre_contenedor.setAttribute("class", "nombre_contenedor");
 
-        // info de los pokes
+        const pokemon_id = document.createElement("p");
+        pokemon_id.setAttribute("id", "pokemon_id");
+        pokemon_id.textContent = `#${i + 1}`;
 
-        const info_pokemon = document.createElement("div")
-        info_pokemon.setAttribute("class", "pokemon_info")
-        
-        const nombre_contenedor = document.createElement("div")
-        nombre_contenedor.setAttribute("class", "nombre_contenedor")
+        const card_title = document.createElement("h3");
+        card_title.setAttribute("id", "card_title");
+        card_title.textContent = pokemon.name.toUpperCase();
 
-        const pokemon_id = document.createElement("p")
-        pokemon_id.setAttribute("id", "pokemon_id")
-        pokemon_id.textContent = `#${i+1}`
+        const tipo_pokemon = document.createElement("div");
+        tipo_pokemon.setAttribute("class", "pokemon_tipos");
 
-        const card_title = document.createElement("h3")
-        card_title.setAttribute("id", "card_title")
-        card_title.textContent = pokemon.name.toUpperCase()
+        const tipo = document.createElement("p");
+        tipo.textContent = pokemon.types;
 
-        //Tipos de pokemones
+        const pokemon_buttons = document.createElement("div");
+        pokemon_buttons.setAttribute("class", "pokemon_buttons");
 
-        const tipo_pokemon = document.createElement("div")
-        tipo_pokemon.setAttribute("class","pokemon_tipos")
-        
-        const tipo = document.createElement("p")
-        tipo.textContent = pokemon.types
+        const agregar_equipo = document.createElement("button");
+        agregar_equipo.setAttribute("class", "btn agregar_equipo");
+        agregar_equipo.textContent = "Agregar al equipo";
 
-        // Creo los botones
-        const pokemon_buttons = document.createElement("div")
-        pokemon_buttons.setAttribute("class", "pokemon_buttons")
+        agregar_equipo.addEventListener("click", () => {
+            const selected_team_id = document.getElementById('team-dropdown').value;
+            if (selected_team_id) {
+                fetch(`/team/${selected_team_id}/pokemon`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        pokemon_id: i + 1
+                    }),
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.message === 'Pokemon added to team successfully') {
+                        alert('Pokémon agregado al equipo');
+                    } else {
+                        alert('Error al agregar Pokémon al equipo');
+                    }
+                })
+                .catch(error => {
+                    console.error('Error al agregar Pokémon al equipo:', error);
+                    alert('Error al agregar Pokémon al equipo. Intente de nuevo.');
+                });
+            } else {
+                alert('Seleccione un equipo para agregar el Pokémon');
+            }
+        });
 
-        const agregar_equipo = document.createElement("button")
-        agregar_equipo.setAttribute("class", "btn agregar_equipo")
-        agregar_equipo.textContent = "Agregar al equipo"
+        const ver_stats = document.createElement("button");
+        ver_stats.setAttribute("class", "btn ver_estadisticas");
+        ver_stats.textContent = "Ver estadísticas";
 
-        const ver_stats = document.createElement("button")
-        ver_stats.setAttribute("class", "btn ver_estadisticas")
-        ver_stats.textContent = "Ver estadisticas"
-        
-        // Agregamos el evento clic para redirigir al usuario
-        // Forma más concisa de definir funciones en JS, utilizando:
-        // la sintaxis (params) => { cuerpo de la función }
-        // P.D: Intente definir una función afuera, pero no me funcionaba, buscando encontré esto
-        // Funcionó así que así quedo
         ver_stats.addEventListener("click", () => {
             window.location.href = `/pokemon?id=${i + 1}`;
         });
 
-        pokemon_buttons.append(agregar_equipo,ver_stats)
-        imagen_pokemon.append(img)
-        tipo_pokemon.append(tipo)
-        nombre_contenedor.append(pokemon_id)
-        nombre_contenedor.append(card_title)
-        info_pokemon.append(nombre_contenedor)
-        info_pokemon.append(pokemon_buttons, tipo_pokemon)
-        pokemon_content.append(imagen_pokemon)
-        pokemon_content.append(info_pokemon)
-        container.append(pokemon_content)
-        pokemonList.append(container)
-    })
+        pokemon_buttons.append(agregar_equipo, ver_stats);
+        imagen_pokemon.append(img);
+        tipo_pokemon.append(tipo);
+        nombre_contenedor.append(pokemon_id, card_title);
+        info_pokemon.append(nombre_contenedor, pokemon_buttons, tipo_pokemon);
+        pokemon_content.append(imagen_pokemon, info_pokemon);
+        container.append(pokemon_content);
+        pokemonList.append(container);
+    });
 }
-const info_pokemon = fetch('https://pokeapi.co/api/v2/pokemon?limit=151')
-    .then(data => data.json())
+
+fetch('https://pokeapi.co/api/v2/pokemon?limit=151')
+    .then(data_pokemon)
     .then(create_pokemon)
     .catch(err => console.error(err));

@@ -10,7 +10,6 @@
         function redirect_pokemon_page() {
             event.preventDefault();
             let pokemon_id = document.getElementById('search-id').value.toLowerCase().trim();
-            // Por lo que estuve investigando, no era n°s, caracter o strings no debería de entrar
             if (pokemon_id) {
                 window.location.href = `/pokemon?id=${pokemon_id}`;
             }
@@ -25,7 +24,11 @@
             <ul class="links">
                 <li class="page"><a href="/" target="_blank">Inicio</a></li>
                 <li class="page"><a href="/team" target="_blank">Crear Equipos</a></li>
-                <li class="page"><a href="https://promiedos.com.ar" target="_blank">LINK A OTRA COSA</a></li>
+                <li class="page">
+                    <select id="team-dropdown">
+                        <option value="">Vaya a crear equipos</option>
+                    </select>
+                </li>
             </ul>
         </nav>
     </header>
@@ -38,11 +41,11 @@
             </form>
         </div>
 
-            <div class="list_pokemons"> 
-            </div>
+        <div class="list_pokemons">
+        </div>
     </main>
 
     <script src="/static/js/main.js"></script>
-
 </body>
-</html
+
+</html>

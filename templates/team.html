@@ -19,38 +19,11 @@
     </header>
 
     <main>
-        <div class="pokemon-selection">
-            <label for="pokemon-select">Choose a Pokémon:</label>
-            <select id="pokemon-select">
-                <option value="">Select Pokemon</option>
-                <!-- Opciones de Pokémon se agregarán dinámicamente aquí -->
-            </select>
-        </div>
-
-        <br>
-        
-        <div class="pokemon-display">
-            <h2>Selected Pokémon</h2>
-            <!-- Mostar foto y nombre del Pokemon -->
-            <div id="pokemon-details">
-                <p>Please select a Pokémon from the list</p>
-            </div>
-        </div>
-        
-        <br>
-        
         <div class="team-name">
             <label for="team-name">Team Name:</label>
             <input type="text" id="team-name" placeholder="Enter team name">
-            <button onclick="importTeam()" class="btn">Import</button>
+            <button id="create-team" class="btn">Create Team</button>
         </div>
-        
-        <div class="team">
-            <h2>Your Team</h2>
-            <ul id="team-list"></ul>
-            <button id="save-team" class="btn">Save Team</button>
-        </div>
-      
     </main>
 
     <script src="/static/js/team.js"></script>
