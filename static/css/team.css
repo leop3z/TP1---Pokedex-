@@ -131,3 +131,36 @@ main {
     box-sizing: border-box;
     margin-bottom: 10px;
 }
+
+.pokemon img {
+    cursor: pointer;
+}
+
+.remove-button {
+    background-color: red;
+    color: white;
+    border: none;
+    border-radius: 50%;
+    cursor: pointer;
+    font-size: 16px;
+    padding: 5px 10px;
+    margin-top: 5px;
+    display: inline-block;
+}
+
+.delete-team-button {
+    background-color: red;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    padding: 5px 10px;
+    margin-left: 10px;
+}
+
+.team-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}

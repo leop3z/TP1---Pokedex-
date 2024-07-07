@@ -238,5 +238,28 @@ def get_teams_with_pokemons():
     except Exception as e:
         return jsonify({"error": str(e)}), 500
 
+@app.route('/team/<int:team_id>/pokemon/<int:pokemon_id>', methods=['DELETE'])
+def delete_pokemon_from_team(team_id, pokemon_id):
+    try:
+        pokemon = Pokemon.query.filter_by(team_id=team_id, pokemon_id=pokemon_id).first_or_404()
+        db.session.delete(pokemon)
+        db.session.commit()
+        return jsonify(message='Pokemon removed from team successfully'), 200
+    except Exception as e:
+        return jsonify(message=f'Error removing pokemon from team: {str(e)}'), 500
+
+@app.route('/team/<int:team_id>', methods=['DELETE'])
+def delete_team(team_id):
+    try:
+        team = Team.query.get_or_404(team_id)
+        pokemons = Pokemon.query.filter_by(team_id=team_id).all()
+        for pokemon in pokemons:
+            db.session.delete(pokemon)
+        db.session.delete(team)
+        db.session.commit()
+        return jsonify(message='Team and its pokemons deleted successfully'), 200
+    except Exception as e:
+        return jsonify(message=f'Error deleting team: {str(e)}'), 500
+
 if __name__ == '__main__':
     app.run(debug=True)

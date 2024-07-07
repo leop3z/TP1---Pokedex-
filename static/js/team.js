@@ -42,9 +42,40 @@ document.addEventListener("DOMContentLoaded", () => {
                     const teamElement = document.createElement('div');
                     teamElement.classList.add('team');
 
+                    const teamHeader = document.createElement('div');
+                    teamHeader.classList.add('team-header');
+
                     const teamNameElement = document.createElement('h2');
                     teamNameElement.textContent = team.name;
-                    teamElement.appendChild(teamNameElement);
+
+                    const deleteTeamButton = document.createElement('button');
+                    deleteTeamButton.textContent = 'Eliminar equipo';
+                    deleteTeamButton.classList.add('delete-team-button');
+                    deleteTeamButton.addEventListener('click', () => {
+                        fetch(`/team/${team.id}`, {
+                            method: 'DELETE',
+                            headers: {
+                                'Content-Type': 'application/json',
+                            },
+                        })
+                        .then(response => response.json())
+                        .then(data => {
+                            if (data.message === 'Team and its pokemons deleted successfully') {
+                                alert('Equipo y sus Pokémon eliminados');
+                                loadTeamsWithPokemons();
+                            } else {
+                                alert('Error al eliminar el equipo');
+                            }
+                        })
+                        .catch(error => {
+                            console.error('Error al eliminar el equipo:', error);
+                            alert('Error al eliminar el equipo. Intente de nuevo.');
+                        });
+                    });
+
+                    teamHeader.appendChild(teamNameElement);
+                    teamHeader.appendChild(deleteTeamButton);
+                    teamElement.appendChild(teamHeader);
 
                     const pokemonsContainer = document.createElement('div');
                     pokemonsContainer.classList.add('pokemons-container');
@@ -58,12 +89,42 @@ document.addEventListener("DOMContentLoaded", () => {
                                 const pokemonImg = document.createElement('img');
                                 pokemonImg.src = pokemonData.sprites.front_default;
                                 pokemonImg.alt = pokemonData.name;
+                                pokemonImg.classList.add('pokemon-img');
+                                pokemonImg.addEventListener('click', () => {
+                                    window.location.href = `/pokemon?id=${pokemon.pokemon_id}`;
+                                });
 
                                 const pokemonName = document.createElement('p');
                                 pokemonName.textContent = pokemonData.name;
 
+                                const removeButton = document.createElement('button');
+                                removeButton.textContent = 'X';
+                                removeButton.classList.add('remove-button');
+                                removeButton.addEventListener('click', () => {
+                                    fetch(`/team/${team.id}/pokemon/${pokemon.pokemon_id}`, {
+                                        method: 'DELETE',
+                                        headers: {
+                                            'Content-Type': 'application/json',
+                                        },
+                                    })
+                                    .then(response => response.json())
+                                    .then(data => {
+                                        if (data.message === 'Pokemon removed from team successfully') {
+                                            alert('Pokémon removed from team');
+                                            loadTeamsWithPokemons();
+                                        } else {
+                                            alert('Error removing Pokémon from team');
+                                        }
+                                    })
+                                    .catch(error => {
+                                        console.error('Error removing Pokémon from team:', error);
+                                        alert('Error removing Pokémon from team. Please try again.');
+                                    });
+                                });
+
                                 pokemonElement.appendChild(pokemonImg);
                                 pokemonElement.appendChild(pokemonName);
+                                pokemonElement.appendChild(removeButton);
                                 pokemonsContainer.appendChild(pokemonElement);
                             })
                             .catch(err => console.error('Error fetching Pokémon data:', err));
