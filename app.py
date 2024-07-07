@@ -220,5 +220,23 @@ def get_teams():
     except Exception as e:
         return jsonify({"error": str(e)}), 500
 
+# Ruta para mostrar la página de estadísticas del Pokémon
+@app.route('/pokemon', methods=['GET'])
+def show_pokemon():
+    return render_template('pokemon.html')
+
+@app.route('/teams_with_pokemons', methods=['GET'])
+def get_teams_with_pokemons():
+    try:
+        teams = Team.query.all()
+        teams_with_pokemons = []
+        for team in teams:
+            pokemons = Pokemon.query.filter_by(team_id=team.id).all()
+            pokemon_list = [{"pokemon_id": pokemon.pokemon_id} for pokemon in pokemons]
+            teams_with_pokemons.append({"id": team.id, "name": team.name, "pokemons": pokemon_list})
+        return jsonify(teams_with_pokemons), 200
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
+
 if __name__ == '__main__':
     app.run(debug=True)
