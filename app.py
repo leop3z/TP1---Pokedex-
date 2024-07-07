@@ -266,6 +266,17 @@ def delete_team(team_id):
         return jsonify(message='Team and its pokemons deleted successfully'), 200
     except Exception as e:
         return jsonify(message=f'Error deleting team: {str(e)}'), 500
+    
+@app.route('/team/<int:team_id>', methods=['PUT'])
+def update_team_name(team_id):
+    try:
+        data = request.json
+        team = Team.query.get_or_404(team_id)
+        team.name = data['name']
+        db.session.commit()
+        return jsonify(message='Team name updated successfully'), 200
+    except Exception as e:
+        return jsonify(message=f'Error updating team name: {str(e)}'), 500
 
 if __name__ == '__main__':
     app.run(debug=True)

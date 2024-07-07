@@ -159,6 +159,17 @@ main {
     margin-left: 10px;
 }
 
+.edit-team-button {
+    background-color: blue;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    padding: 5px 10px;
+    margin-left: 10px;
+}
+
 .team-header {
     display: flex;
     justify-content: space-between;
