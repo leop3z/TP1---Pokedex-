@@ -180,6 +180,9 @@ def create_team_page():
 def create_team():
     try:
         data = request.json
+        existing_team = Team.query.filter_by(name=data['name']).first()
+        if existing_team:
+            return jsonify(message='Team name already exists'), 400
         new_team = Team(name=data['name'])
         db.session.add(new_team)
         db.session.commit()
@@ -191,6 +194,9 @@ def create_team():
 @app.route('/team/<int:team_id>/pokemon', methods=['POST'])
 def add_pokemon_to_team(team_id):
     try:
+        team = Team.query.get_or_404(team_id)
+        if len(team.pokemons) >= 6:
+            return jsonify(message='Team already has 6 pokemons'), 400
         data = request.json
         new_pokemon = Pokemon(pokemon_id=data['pokemon_id'], team_id=team_id)
         db.session.add(new_pokemon)
@@ -260,6 +266,17 @@ def delete_team(team_id):
         return jsonify(message='Team and its pokemons deleted successfully'), 200
     except Exception as e:
         return jsonify(message=f'Error deleting team: {str(e)}'), 500
+    
+@app.route('/team/<int:team_id>', methods=['PUT'])
+def update_team_name(team_id):
+    try:
+        data = request.json
+        team = Team.query.get_or_404(team_id)
+        team.name = data['name']
+        db.session.commit()
+        return jsonify(message='Team name updated successfully'), 200
+    except Exception as e:
+        return jsonify(message=f'Error updating team name: {str(e)}'), 500
 
 if __name__ == '__main__':
     app.run(debug=True)
