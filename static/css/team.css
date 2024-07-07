@@ -164,3 +164,9 @@ main {
     justify-content: space-between;
     align-items: center;
 }
+
+.pokemon-count {
+    font-size: 14px;
+    color: grey;
+    margin-left: 10px;
+}

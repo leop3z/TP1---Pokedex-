@@ -194,6 +194,9 @@ def create_team():
 @app.route('/team/<int:team_id>/pokemon', methods=['POST'])
 def add_pokemon_to_team(team_id):
     try:
+        team = Team.query.get_or_404(team_id)
+        if len(team.pokemons) >= 6:
+            return jsonify(message='Team already has 6 pokemons'), 400
         data = request.json
         new_pokemon = Pokemon(pokemon_id=data['pokemon_id'], team_id=team_id)
         db.session.add(new_pokemon)

@@ -50,6 +50,10 @@ document.addEventListener("DOMContentLoaded", () => {
                     const teamNameElement = document.createElement('h2');
                     teamNameElement.textContent = team.name;
 
+                    const pokemonCount = document.createElement('span');
+                    pokemonCount.classList.add('pokemon-count');
+                    pokemonCount.textContent = `(${team.pokemons.length}/6)`;
+
                     const deleteTeamButton = document.createElement('button');
                     deleteTeamButton.textContent = 'Eliminar equipo';
                     deleteTeamButton.classList.add('delete-team-button');
@@ -76,6 +80,7 @@ document.addEventListener("DOMContentLoaded", () => {
                     });
 
                     teamHeader.appendChild(teamNameElement);
+                    teamHeader.appendChild(pokemonCount);
                     teamHeader.appendChild(deleteTeamButton);
                     teamElement.appendChild(teamHeader);
 
