@@ -180,6 +180,9 @@ def create_team_page():
 def create_team():
     try:
         data = request.json
+        existing_team = Team.query.filter_by(name=data['name']).first()
+        if existing_team:
+            return jsonify(message='Team name already exists'), 400
         new_team = Team(name=data['name'])
         db.session.add(new_team)
         db.session.commit()

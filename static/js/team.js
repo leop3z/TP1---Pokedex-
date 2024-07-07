@@ -20,6 +20,8 @@ document.addEventListener("DOMContentLoaded", () => {
                 if (data.message === 'Team created successfully') {
                     alert('Team created successfully');
                     loadTeamsWithPokemons();
+                } else if (data.message === 'Team name already exists') {
+                    alert('Team name already exists. Please choose a different name.');
                 } else {
                     alert('Error creating team. Please try again.');
                 }
