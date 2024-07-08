@@ -12,7 +12,7 @@
   padding: 0;
   box-sizing: border-box;
   color: var(--black);
-  font-family: "Kumbh Sans";
+  font-family: "Kumbh Sans", sans-serif;
 }
 
 body {
@@ -37,10 +37,12 @@ header {
 }
 
 .title {
-  font-family: sans-serif;
-  width: 300px;
   text-align: center;
   font-size: 36px;
+  padding-left: 60px;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  color: white;
 }
 
 .other-pages {
@@ -52,10 +54,13 @@ header {
   list-style: none;
 }
 
-.page {
+.page{
   padding: 10px;
-  margin: 5px;
+  margin: 8px;
   font-size: 18px;
+  border-radius: 10px;
+  background-color: var(--dark-cyan);
+  transition: transform 0.2s;
 }
 
 .page:hover {
