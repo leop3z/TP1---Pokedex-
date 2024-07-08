@@ -11,11 +11,11 @@ form.addEventListener('submit', event => {
     warning.innerHTML = ""
 
     if (user.value.length < 4) {
-        error += `El nombre es muy corto <br>`
+        error += `The name is too short. <br>`
         action = true
     }
     if (pass.value.length < 4) {
-        error += `La contraseña es muy corta <br>`
+        error += `The password is too short. <br>`
         action = true
     }
     if(action){

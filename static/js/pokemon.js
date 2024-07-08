@@ -70,19 +70,19 @@ document.addEventListener("DOMContentLoaded", () => {
                 .then(response => response.json())
                 .then(data => {
                     if (data.message === 'Pokemon added to team successfully') {
-                        alert('Pokémon agregado al equipo');
+                        alert('Pokémon added to the team');
                     } else if (data.message === 'Team already has 6 pokemons') {
-                        alert('El equipo ya tiene 6 Pokémon. No se pueden agregar más.');
+                        alert('The team already has 6 Pokémon. No more can be added.');
                     } else {
-                        alert('Error al agregar Pokémon al equipo');
+                        alert('Error adding Pokémon to the team');
                     }
                 })
                 .catch(error => {
-                    console.error('Error al agregar Pokémon al equipo:', error);
-                    alert('Error al agregar Pokémon al equipo. Por favor, intente de nuevo.');
+                    console.error('Error adding Pokémon to the team:', error);
+                    alert('Error adding Pokémon to the team. Please try again.');
                 });
             } else {
-                alert('Seleccione un equipo para agregar el Pokémon');
+                alert('Select a team to add the Pokémon');
             }
         });
 
@@ -98,17 +98,17 @@ document.addEventListener("DOMContentLoaded", () => {
                 .then(response => response.json())
                 .then(data => {
                     if (data.message === 'Pokemon removed from team successfully') {
-                        alert('Pokémon eliminado del equipo');
+                        alert('Pokémon removed from the team');
                     } else {
-                        alert('Error al eliminar Pokémon del equipo');
+                        alert('Error removing Pokémon from the team');
                     }
                 })
                 .catch(error => {
-                    console.error('Error al eliminar Pokémon del equipo:', error);
-                    alert('Error al eliminar Pokémon del equipo. Por favor, intente de nuevo.');
+                    console.error('Error removing Pokémon from the team:', error);
+                    alert('Error removing Pokémon from the team. Please try again.');
                 });
             } else {
-                alert('Seleccione un equipo para eliminar el Pokémon');
+                alert('Select a team to remove the Pokémon');
             }
         });
     }

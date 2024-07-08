@@ -7,7 +7,7 @@ fetch('/teams')
         if (teams.length === 0) {
             const option = document.createElement('option');
             option.value = '';
-            option.textContent = 'Vaya a crear equipos';
+            option.textContent = 'Create teams';
             dropdown.appendChild(option);
         } else {
             teams.forEach(team => {
@@ -67,7 +67,7 @@ function create_pokemon(pokemons) {
 
         const agregar_equipo = document.createElement("button");
         agregar_equipo.setAttribute("class", "btn agregar_equipo");
-        agregar_equipo.textContent = "Agregar al equipo";
+        agregar_equipo.textContent = "Add to the team";
 
         agregar_equipo.addEventListener("click", () => {
             const selected_team_id = document.getElementById('team-dropdown').value;
@@ -84,23 +84,23 @@ function create_pokemon(pokemons) {
                 .then(response => response.json())
                 .then(data => {
                     if (data.message === 'Pokemon added to team successfully') {
-                        alert('Pokémon agregado al equipo');
+                        alert('Pokémon added to the team');
                     } else {
-                        alert('Error al agregar Pokémon al equipo');
+                        alert('Error adding Pokémon to the team');
                     }
                 })
                 .catch(error => {
-                    console.error('Error al agregar Pokémon al equipo:', error);
-                    alert('Error al agregar Pokémon al equipo. Intente de nuevo.');
+                    console.error('Error adding Pokémon to the team: ', error);
+                    alert('Error adding Pokémon to the team. Please try again.');
                 });
             } else {
-                alert('Seleccione un equipo para agregar el Pokémon');
+                alert('Select a team to add the Pokémon');
             }
         });
 
         const ver_stats = document.createElement("button");
         ver_stats.setAttribute("class", "btn ver_estadisticas");
-        ver_stats.textContent = "Ver estadísticas";
+        ver_stats.textContent = "View Stats";
 
         ver_stats.addEventListener("click", () => {
             window.location.href = `/pokemon?id=${i + 1}`;

@@ -67,15 +67,15 @@ document.addEventListener("DOMContentLoaded", () => {
                         .then(response => response.json())
                         .then(data => {
                             if (data.message === 'Team and its pokemons deleted successfully') {
-                                alert('Equipo y sus Pokémon eliminados');
+                                alert('Team and its Pokémon deleted');
                                 loadTeamsWithPokemons();
                             } else {
-                                alert('Error al eliminar el equipo');
+                                alert('Error deleting the team');
                             }
                         })
                         .catch(error => {
-                            console.error('Error al eliminar el equipo:', error);
-                            alert('Error al eliminar el equipo. Intente de nuevo.');
+                            console.error('Error deleting the team:', error);
+                            alert('Error deleting the team. Please try again.');
                         });
                     });
 
