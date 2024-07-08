@@ -25,24 +25,33 @@ source venv/bin/activate
 pip install -r requirements.txt
 ```
 ## Base de Datos 
-## Accede a la consola de PostgreSQL
+
+### Accede a la consola de PostgreSQL
 
 ```
 psql
 ```
-> [!Nota]: Esto te hará acceder como usuario 'postgres' o el usuario que has establecido
-
+> Nota: Esto te hará acceder como usuario 'postgres' o el usuario que has establecido
+### Crea un usuario
+```
+CREATE USER pokemon_user WITH PASSWORD 'password';
+```
 ### Crea la base de datos
 ```
 CREATE DATABASE pokemon_teams;
+```
+### Otorga permisos al usuario en la base de datos
+```
+GRANT ALL PRIVILEGES ON DATABASE pokemon_teams TO pokemon_user;
 ```
 ### Cambia a la base de datos recién creada
 ```
 \c pokemon_teams
 ```
-> [!Nota]: Acá podrás ver los cambios al momento de crear equipos, en sus respectivas tablas 
+> Nota : Acá podrás consultar los cambios al momento de crear equipos, en sus respectivas tablas 
 
 ## Iniciar la aplicación
 ```
 python app.py
 ```
+> Nota: Probar con 'python3', si no llega a iniciar
