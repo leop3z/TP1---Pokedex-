@@ -50,8 +50,12 @@ GRANT ALL PRIVILEGES ON DATABASE pokemon_teams TO pokemon_user;
 ```
 > Nota : Acá podrás consultar los cambios al momento de crear equipos, en sus respectivas tablas 
 
-## Iniciar la aplicación
+## Iniciar la base de datos y aplicación
+```
+sudo service postgresql start
+```
+
 ```
 python app.py
 ```
-> Nota: Probar con 'python3', si no llega a iniciar
+> Nota: Iniciar en terminal separada a la base de datos para evitar conflictos. Probar con 'python3', si no llega a iniciar
