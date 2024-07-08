@@ -56,12 +56,6 @@ function create_pokemon(pokemons) {
         card_title.setAttribute("id", "card_title");
         card_title.textContent = pokemon.name.toUpperCase();
 
-        const tipo_pokemon = document.createElement("div");
-        tipo_pokemon.setAttribute("class", "pokemon_tipos");
-
-        const tipo = document.createElement("p");
-        tipo.textContent = pokemon.types;
-
         const pokemon_buttons = document.createElement("div");
         pokemon_buttons.setAttribute("class", "pokemon_buttons");
 
@@ -108,9 +102,8 @@ function create_pokemon(pokemons) {
 
         pokemon_buttons.append(agregar_equipo, ver_stats);
         imagen_pokemon.append(img);
-        tipo_pokemon.append(tipo);
         nombre_contenedor.append(pokemon_id, card_title);
-        info_pokemon.append(nombre_contenedor, pokemon_buttons, tipo_pokemon);
+        info_pokemon.append(nombre_contenedor, pokemon_buttons);
         pokemon_content.append(imagen_pokemon, info_pokemon);
         container.append(pokemon_content);
         pokemonList.append(container);
