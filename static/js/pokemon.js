@@ -16,8 +16,8 @@ document.addEventListener("DOMContentLoaded", () => {
                 document.getElementById('pokemon_height').innerText = `Height: ${pokemon.height / 10}m`;
                 document.getElementById('pokemon_weight').innerText = `Weight: ${pokemon.weight / 10}kg`;
 
-                const types = pokemon.types.map(type => type.type.name).join(', ');
-                document.getElementById('pokemon_types').innerText = types;
+                const types = pokemon.types.map(type => type.type.name).join(' , ');
+                document.getElementById('pokemon_types').innerText = 'Types: ' + types;
 
                 createPokemonTable(pokemon);
 

@@ -126,7 +126,8 @@ main {
 .pokemon__description {
   padding-top: 10px;
   padding-bottom: 10px;
-  text-align: justify;
+  text-align: center;
+  width: auto;
 }
 
 .pokemon__features {
@@ -135,10 +136,11 @@ main {
   padding: 10px;
 }
 
+.pokemon_id,
 .pokemon__height,
 .pokemon__weight,
 .pokemon__types {
-  width: 50%;
+  width: 25%;
 }
 
 .pokemon__table {
