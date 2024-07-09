@@ -1,57 +1,95 @@
-body {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-    background-color: #f7f7f7;
-    font-family: Arial, sans-serif;
+:root {
+    --dark-cyan: hsl(185, 75%, 39%);
+    --very-dark-desaturated_blue: hsl(229, 23%, 23%);
+    --dark-grayish-blue: hsl(227, 10%, 46%);
+    --dark-gray: hsl(0, 0%, 59%);
+  }
+
+
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
 }
 
-.login-container {
-    background-color: #fff;
+body{
+    font-family: Helvetica, sans-serif;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    background-color: var(--dark-cyan);
+}
+
+form{
+    background-color: rgb(112, 144, 172);
+    border-radius: 15px;
+    box-shadow: 0 0 20px rgba(0,0,0, 0.3);
+    padding: 40px;
+    display: flex;
+    flex-direction: column;
+    width: 600px;
+}
+#welcome-text{
+    text-align: center;
+    padding-bottom: 20px;
+    color: rgb(255, 255, 255);
+}
+
+#username{
+    display: flex;
+    flex-direction: column;
+}
+
+#password{
+    display: flex;
+    flex-direction: column;
+}
+
+label{
+    padding-bottom: 10px;
+    padding-top: 10px;
+    font-size: 18px;
+    color: aliceblue;
+}
+
+input{
+    border-radius: 5px;
+    border: 1px;
+    height: 45px;
+    padding-left: 5px;
+    font-size: 16px;
+    background-color: rgb(255, 255, 255);
+}
+input::placeholder{
+    font-size: 16px;
+}
+
+#submit-user{
+    padding-top: 35px;
+    align-items: center;
+}
+
+.btn-log-in{
+    padding: 10px;
+    border-radius: 5px;
+    border: 1px solid transparent;
+    width: 100%;
+    background-color: rgb(212, 208, 208);
+    color: rgb(126, 124, 124);
+    font-weight: bold;
+}
+
+#message{
     padding: 20px;
-    border-radius: 8px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    width: 300px;
+    text-align: center;
+    color: rgba(94, 30, 30, 0.712);
+}
+
+.redirection-text{
     text-align: center;
 }
 
-.login-container h2 {
-    margin-bottom: 20px;
-}
-
-.form-group {
-    margin-bottom: 15px;
-    text-align: left;
-}
-
-.form-group label {
-    display: block;
-    margin-bottom: 5px;
-}
-
-.form-group input {
-    width: 100%;
-    padding: 8px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-}
-
-button {
-    width: 100%;
-    padding: 10px;
-    background-color: #4CAF50;
-    color: white;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-}
-
-button:hover {
-    background-color: #45a049;
-}
-
-#message {
-    margin-top: 20px;
-    color: red;
+a{
+    text-decoration: none;
 }
