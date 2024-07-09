@@ -1,6 +1,7 @@
-from flask import Flask, jsonify, render_template, request, session
+from flask import Flask, jsonify, render_template, request, session, redirect, url_for
 from flask_sqlalchemy import SQLAlchemy
 from werkzeug.security import generate_password_hash, check_password_hash
+import os
 import requests
 
 app = Flask(__name__)
@@ -8,7 +9,14 @@ app.secret_key = 'your_secret_key'  # Cambia esto por una clave secreta fuerte
 
 # Configuración de la base de datos
 app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://pokemon_user:password@localhost:5432/pokemon_teams'
+app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db = SQLAlchemy(app)
+
+# Directorio para subir fotos de perfil
+UPLOAD_FOLDER = 'static/uploads'
+app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
+if not os.path.exists(UPLOAD_FOLDER):
+    os.makedirs(UPLOAD_FOLDER)
 
 # Definición de los modelos
 
@@ -17,6 +25,8 @@ class User(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String(100), nullable=False, unique=True)
     password = db.Column(db.String(200), nullable=False)
+    profile_picture = db.Column(db.String(200), default='uploads/default_profile.png')
+    description = db.Column(db.String(200), default='')
     teams = db.relationship('Team', backref='user', lazy=True)
 
 class Team(db.Model):
@@ -50,11 +60,7 @@ def register_page():
 def login_page():
     return render_template('login.html')
 
-# Ruta para la página de equipos
-@app.route('/team', methods=['GET'])
-def create_team_page():
-    return render_template('team.html')
-
+# Ruta para mostrar la página de estadísticas del Pokémon
 @app.route('/pokemon', methods=['GET'])
 def show_pokemon():
     return render_template('pokemon.html')
@@ -63,6 +69,51 @@ def show_pokemon():
 @app.route('/index', methods=['GET'])
 def index():
     return render_template('index.html')
+
+# Ruta para la página de perfil del usuario
+@app.route('/profile', methods=['GET'])
+def profile_page():
+    try:
+        if 'user_id' not in session:
+            return redirect(url_for('login_page'))
+        
+        user = User.query.get(session['user_id'])
+        return render_template('profile.html', user=user)
+    except Exception as e:
+        return jsonify(message=f'Error loading profile page: {str(e)}'), 500
+
+@app.route('/profile', methods=['POST'])
+def update_profile():
+    try:
+        if 'user_id' not in session:
+            return redirect(url_for('login_page'))
+
+        user = User.query.get(session['user_id'])
+        username = request.form.get('username')
+        description = request.form.get('description')
+
+        # Verificar si se ha subido una nueva foto de perfil
+        if 'profile_picture' in request.files:
+            profile_picture = request.files['profile_picture']
+            if profile_picture.filename != '':
+                # Eliminar la foto de perfil anterior si no es la por defecto
+                if user.profile_picture != 'uploads/default_profile.png':
+                    old_picture_path = os.path.join(app.config['UPLOAD_FOLDER'], user.profile_picture.split('/')[-1])
+                    if os.path.exists(old_picture_path):
+                        os.remove(old_picture_path)
+                
+                file_path = os.path.join(app.config['UPLOAD_FOLDER'], profile_picture.filename)
+                profile_picture.save(file_path)
+                user.profile_picture = 'uploads/' + profile_picture.filename
+
+        user.username = username
+        user.description = description
+
+        db.session.commit()
+
+        return redirect(url_for('profile_page'))
+    except Exception as e:
+        return jsonify(message=f'Error updating profile: {str(e)}'), 500
 
 @app.route('/register', methods=['POST'])
 def register_user():
@@ -102,6 +153,11 @@ def login_user():
             return jsonify(message='Invalid username or password', success=False), 401
     except Exception as e:
         return jsonify(message=f'Error logging in: {str(e)}'), 500
+
+# Ruta para la página de crear equipos
+@app.route('/team', methods=['GET'])
+def create_team_page():
+    return render_template('team.html')
 
 @app.route('/team', methods=['POST'])
 def create_team():

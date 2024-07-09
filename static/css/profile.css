@@ -1,0 +1,132 @@
+:root {
+    --dark-cyan: hsl(185, 75%, 39%);
+    --very-dark-desaturated_blue: hsl(229, 23%, 23%);
+    --dark-grayish-blue: hsl(227, 10%, 46%);
+    --dark-gray: hsl(0, 0%, 59%);
+    --white: hsl(0, 0%, 100%);
+    --black: hsl(0, 0%, 0%);
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Kumbh Sans", sans-serif;
+    text-decoration: none;
+}
+
+body {
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    background-color: var(--dark-cyan);
+    color: var(--white);
+}
+
+header {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 32px;
+    max-width: 1000px;
+    margin: 0 auto;
+    background-color: var(--very-dark-desaturated_blue);
+    color: var(--white);
+}
+
+.title {
+    text-align: center;
+    font-size: 36px;
+    padding-left: 60px;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    color: white;
+}
+
+.other-pages {
+    height: 60px;
+}
+
+.links {
+    display: flex;
+    list-style: none;
+}
+
+.page {
+    padding: 10px;
+    margin: 5px;
+    font-size: 18px;
+    border-radius: 10px;
+    background-color: var(--dark-cyan);
+    transition: transform 0.2s;
+}
+.page:hover {
+    transform: scale(1.1);
+}
+
+a {
+    color: white;
+}
+
+main {
+    padding: 32px;
+    max-width: 1000px;
+    margin: 0 auto;
+    min-height: 100vh;
+    background-color: var(--very-dark-desaturated_blue);
+}
+
+.profile-container {
+    background-color: var(--dark-grayish-blue);
+    padding: 20px;
+    border-radius: 10px;
+    color: var(--white);
+    margin: 15px;
+}
+
+.form-group {
+    margin-bottom: 15px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 5px;
+}
+
+.form-group input[type="text"],
+.form-group textarea {
+    width: 100%;
+    padding: 10px;
+    border-radius: 5px;
+    border: 1px solid var(--dark-gray);
+}
+
+.form-group input[type="file"] {
+    display: block;
+    margin-top: 10px;
+}
+
+.profile-picture {
+    display: block;
+    margin-top: 10px;
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    background-color: var(--dark-gray);
+}
+
+.btn {
+    background-color: var(--dark-cyan);
+    padding: 10px;
+    border-radius: 10px;
+    color: var(--white);
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.btn:hover {
+    background-color: var(--dark-grayish-blue);
+}
