@@ -49,6 +49,12 @@ def create_team_page():
 def register_page():
     return render_template('register.html')
 
+# Ruta para mostrar la página de inicio de sesión
+@app.route('/login', methods=['GET'])
+def login_page():
+    return render_template('login.html')
+
+
 @app.route('/register', methods=['POST'])
 def register_user():
     try:
@@ -72,6 +78,22 @@ def register_user():
     except Exception as e:
         return jsonify(message=f'Error registering user: {str(e)}'), 500
 
+# Método para iniciar sesión
+@app.route('/login', methods=['POST'])
+def login_user():
+    try:
+        data = request.json
+        username = data.get('username')
+        password = data.get('password')
+
+        user = User.query.filter_by(username=username).first()
+        if user and check_password_hash(user.password, password):
+            session['user_id'] = user.id
+            return jsonify(message='Login successful'), 200
+        else:
+            return jsonify(message='Invalid username or password'), 401
+    except Exception as e:
+        return jsonify(message=f'Error logging in: {str(e)}'), 500
 
 # Método para crear un equipo
 @app.route('/team', methods=['POST'])
