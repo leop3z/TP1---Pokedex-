@@ -1,10 +1,10 @@
-from flask import Flask, jsonify, render_template, request
+from flask import Flask, jsonify, render_template, request, session
 from flask_sqlalchemy import SQLAlchemy
-import requests
 from werkzeug.security import generate_password_hash, check_password_hash
-
+import requests
 
 app = Flask(__name__)
+app.secret_key = 'your_secret_key'  # Cambia esto por una clave secreta fuerte
 
 # Configuración de la base de datos
 app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://pokemon_user:password@localhost:5432/pokemon_teams'
@@ -35,25 +35,34 @@ class Pokemon(db.Model):
 with app.app_context():
     db.create_all()
 
-# Ruta para la página principal
+# Ruta para la nueva página de inicio
 @app.route('/')
-def index():
-    return render_template('index.html')
+def home():
+    return render_template('home.html')
 
-# Ruta para la página de crear equipos
-@app.route('/team', methods=['GET'])
-def create_team_page():
-    return render_template('team.html')
-
+# Ruta para la página de registro
 @app.route('/register', methods=['GET'])
 def register_page():
     return render_template('register.html')
 
-# Ruta para mostrar la página de inicio de sesión
+# Ruta para la página de inicio de sesión
 @app.route('/login', methods=['GET'])
 def login_page():
     return render_template('login.html')
 
+# Ruta para la página de equipos
+@app.route('/team', methods=['GET'])
+def create_team_page():
+    return render_template('team.html')
+
+@app.route('/pokemon', methods=['GET'])
+def show_pokemon():
+    return render_template('pokemon.html')
+
+# Ruta para la página principal que contiene todos los Pokémon del PokeAPI
+@app.route('/index', methods=['GET'])
+def index():
+    return render_template('index.html')
 
 @app.route('/register', methods=['POST'])
 def register_user():
@@ -74,11 +83,10 @@ def register_user():
         db.session.add(new_user)
         db.session.commit()
 
-        return jsonify(message='User registered successfully'), 201
+        return jsonify(message='User registered successfully', success=True), 201
     except Exception as e:
         return jsonify(message=f'Error registering user: {str(e)}'), 500
 
-# Método para iniciar sesión
 @app.route('/login', methods=['POST'])
 def login_user():
     try:
@@ -89,43 +97,53 @@ def login_user():
         user = User.query.filter_by(username=username).first()
         if user and check_password_hash(user.password, password):
             session['user_id'] = user.id
-            return jsonify(message='Login successful'), 200
+            return jsonify(message='Login successful', success=True), 200
         else:
-            return jsonify(message='Invalid username or password'), 401
+            return jsonify(message='Invalid username or password', success=False), 401
     except Exception as e:
         return jsonify(message=f'Error logging in: {str(e)}'), 500
 
-# Método para crear un equipo
 @app.route('/team', methods=['POST'])
 def create_team():
     try:
+        if 'user_id' not in session:
+            return jsonify(message='User not logged in'), 401
+
         data = request.json
         existing_team = Team.query.filter_by(name=data['name']).first()
         if existing_team:
             return jsonify(message='Team name already exists'), 400
-        new_team = Team(name=data['name'])
+
+        new_team = Team(name=data['name'], user_id=session['user_id'])
         db.session.add(new_team)
         db.session.commit()
+
         return jsonify(message='Team created successfully', team_id=new_team.id), 201
     except Exception as e:
         return jsonify(message=f'Error creating team: {str(e)}'), 500
 
-# Método para agregar un Pokémon a un equipo
 @app.route('/team/<int:team_id>/pokemon', methods=['POST'])
 def add_pokemon_to_team(team_id):
     try:
+        if 'user_id' not in session:
+            return jsonify(message='User not logged in'), 401
+
         team = Team.query.get_or_404(team_id)
+        if team.user_id != session['user_id']:
+            return jsonify(message='Unauthorized'), 403
+
         if len(team.pokemons) >= 6:
             return jsonify(message='Team already has 6 pokemons'), 400
+
         data = request.json
         new_pokemon = Pokemon(pokemon_id=data['pokemon_id'], team_id=team_id)
         db.session.add(new_pokemon)
         db.session.commit()
+
         return jsonify(message='Pokemon added to team successfully'), 201
     except Exception as e:
         return jsonify(message=f'Error adding pokemon to team: {str(e)}'), 500
 
-# Método para obtener todos los Pokémon de un equipo
 @app.route('/team/<int:team_id>/pokemons', methods=['GET'])
 def get_team_pokemons(team_id):
     try:
@@ -136,25 +154,25 @@ def get_team_pokemons(team_id):
     except Exception as e:
         return jsonify({"error": str(e)}), 500
 
-# Método para obtener todos los equipos
 @app.route('/teams', methods=['GET'])
 def get_teams():
     try:
-        teams = Team.query.all()
+        if 'user_id' not in session:
+            return jsonify(message='User not logged in'), 401
+
+        teams = Team.query.filter_by(user_id=session['user_id']).all()
         team_list = [{"id": team.id, "name": team.name} for team in teams]
         return jsonify(team_list), 200
     except Exception as e:
         return jsonify({"error": str(e)}), 500
 
-# Ruta para mostrar la página de estadísticas del Pokémon
-@app.route('/pokemon', methods=['GET'])
-def show_pokemon():
-    return render_template('pokemon.html')
-
 @app.route('/teams_with_pokemons', methods=['GET'])
 def get_teams_with_pokemons():
     try:
-        teams = Team.query.all()
+        if 'user_id' not in session:
+            return jsonify(message='User not logged in'), 401
+
+        teams = Team.query.filter_by(user_id=session['user_id']).all()
         teams_with_pokemons = []
         for team in teams:
             pokemons = Pokemon.query.filter_by(team_id=team.id).all()
@@ -167,9 +185,17 @@ def get_teams_with_pokemons():
 @app.route('/team/<int:team_id>/pokemon/<int:pokemon_id>', methods=['DELETE'])
 def delete_pokemon_from_team(team_id, pokemon_id):
     try:
+        if 'user_id' not in session:
+            return jsonify(message='User not logged in'), 401
+
+        team = Team.query.get_or_404(team_id)
+        if team.user_id != session['user_id']:
+            return jsonify(message='Unauthorized'), 403
+
         pokemon = Pokemon.query.filter_by(team_id=team_id, pokemon_id=pokemon_id).first_or_404()
         db.session.delete(pokemon)
         db.session.commit()
+
         return jsonify(message='Pokemon removed from team successfully'), 200
     except Exception as e:
         return jsonify(message=f'Error removing pokemon from team: {str(e)}'), 500
@@ -177,12 +203,19 @@ def delete_pokemon_from_team(team_id, pokemon_id):
 @app.route('/team/<int:team_id>', methods=['DELETE'])
 def delete_team(team_id):
     try:
+        if 'user_id' not in session:
+            return jsonify(message='User not logged in'), 401
+
         team = Team.query.get_or_404(team_id)
+        if team.user_id != session['user_id']:
+            return jsonify(message='Unauthorized'), 403
+
         pokemons = Pokemon.query.filter_by(team_id=team_id).all()
         for pokemon in pokemons:
             db.session.delete(pokemon)
         db.session.delete(team)
         db.session.commit()
+
         return jsonify(message='Team and its pokemons deleted successfully'), 200
     except Exception as e:
         return jsonify(message=f'Error deleting team: {str(e)}'), 500
@@ -190,10 +223,17 @@ def delete_team(team_id):
 @app.route('/team/<int:team_id>', methods=['PUT'])
 def update_team_name(team_id):
     try:
+        if 'user_id' not in session:
+            return jsonify(message='User not logged in'), 401
+
         data = request.json
         team = Team.query.get_or_404(team_id)
+        if team.user_id != session['user_id']:
+            return jsonify(message='Unauthorized'), 403
+
         team.name = data['name']
         db.session.commit()
+
         return jsonify(message='Team name updated successfully'), 200
     except Exception as e:
         return jsonify(message=f'Error updating team name: {str(e)}'), 500
