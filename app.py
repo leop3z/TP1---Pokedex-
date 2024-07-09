@@ -45,6 +45,34 @@ def index():
 def create_team_page():
     return render_template('team.html')
 
+@app.route('/register', methods=['GET'])
+def register_page():
+    return render_template('register.html')
+
+@app.route('/register', methods=['POST'])
+def register_user():
+    try:
+        data = request.json
+        username = data.get('username')
+        password = data.get('password')
+
+        if not username or not password:
+            return jsonify(message='Username and password are required'), 400
+
+        existing_user = User.query.filter_by(username=username).first()
+        if existing_user:
+            return jsonify(message='Username already exists'), 400
+
+        hashed_password = generate_password_hash(password)
+        new_user = User(username=username, password=hashed_password)
+        db.session.add(new_user)
+        db.session.commit()
+
+        return jsonify(message='User registered successfully'), 201
+    except Exception as e:
+        return jsonify(message=f'Error registering user: {str(e)}'), 500
+
+
 # Método para crear un equipo
 @app.route('/team', methods=['POST'])
 def create_team():
