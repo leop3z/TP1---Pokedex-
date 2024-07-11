@@ -1,49 +1,31 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="/static/css/styles.css">
+    <link rel="stylesheet" href="/static/css/register.css">
     <title>Register</title>
 </head>
-<body>
-    <header>
-        <h1 class="title">Register</h1>
-    </header>
-    <main>
-        <form id="register-form">
-            <input type="text" id="username" placeholder="Username" required>
-            <input type="password" id="password" placeholder="Password" required>
-            <button type="submit" class="btn">Register</button>
-        </form>
-        <div id="error-message" style="color: red;"></div>
-    </main>
-    <script>
-        document.getElementById('register-form').addEventListener('submit', function(event) {
-            event.preventDefault();
-            const username = document.getElementById('username').value;
-            const password = document.getElementById('password').value;
 
-            fetch('/register', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({ username, password }),
-            })
-            .then(response => response.json())
-            .then(data => {
-                if (data.success) {
-                    window.location.href = '/login';
-                } else {
-                    document.getElementById('error-message').innerText = data.message;
-                }
-            })
-            .catch(error => {
-                console.error('Error:', error);
-                document.getElementById('error-message').innerText = 'An error occurred. Please try again.';
-            });
-        });
-    </script>
+<body>
+    <form id="register-form">
+        <h3 id="welcome-text">Register</h3>
+        <div class="username">
+            <label>Select a username</label>
+            <input type="text" placeholder="user1" id="username" required>
+        </div>
+        <div class="password">
+            <label>Password</label>
+            <input type="password" placeholder="*****" id="password" required>
+        </div>
+        <div id="submit-user">
+            <button class="btn-log-in" type="submit" id="btn-log">Register</button>
+        </div>
+        <p id="message"></p>
+        <p class="redirection-text">¿Are you already registered? <a href="/login">Sign in</a></p>
+    </form>
+    
 </body>
+<script src="/static/js/register.js"></script>
 </html>
