@@ -21,7 +21,7 @@ document.getElementById('login-form').addEventListener('submit', function(event)
             messageDiv.style.color = 'green';
             messageDiv.textContent = 'Login successful';
             // Redirect to the home page or another page
-            window.location.href = '/';
+            window.location.href = '/index';
         } else {
             messageDiv.style.color = 'red';
             messageDiv.textContent = data.message;

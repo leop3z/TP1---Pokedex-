@@ -12,16 +12,17 @@
     box-sizing: border-box;
 }
 
-body{
-    font-family: Helvetica, sans-serif;
+
+body {
     display: flex;
-    align-items: center;
     justify-content: center;
+    align-items: center;
     height: 100vh;
+    font-family: Helvetica, sans-serif;
     background-color: var(--dark-cyan);
 }
 
-form{
+.login-container {
     background-color: rgb(112, 144, 172);
     border-radius: 15px;
     box-shadow: 0 0 20px rgba(0,0,0, 0.3);
@@ -30,30 +31,26 @@ form{
     flex-direction: column;
     width: 600px;
 }
-#welcome-text{
+
+.login-container h2 {
     text-align: center;
     padding-bottom: 20px;
     color: rgb(255, 255, 255);
 }
 
-.username{
+.form-group {
     display: flex;
     flex-direction: column;
 }
 
-.password{
-    display: flex;
-    flex-direction: column;
-}
-
-label{
+label {
     padding-bottom: 10px;
     padding-top: 10px;
     font-size: 18px;
     color: aliceblue;
 }
 
-input{
+input {
     border-radius: 5px;
     border: 1px;
     height: 45px;
@@ -61,35 +58,32 @@ input{
     font-size: 16px;
     background-color: rgb(255, 255, 255);
 }
+
 input::placeholder{
     font-size: 16px;
 }
 
-#submit-user{
-    padding-top: 35px;
-    align-items: center;
-}
-
-.btn-log-in{
+.btn-log-in {
+    margin-top: 24px;
     padding: 10px;
+    border: none;
+    cursor: pointer;
     border-radius: 5px;
-    border: 1px solid transparent;
     width: 100%;
     background-color: rgb(212, 208, 208);
     color: rgb(126, 124, 124);
     font-weight: bold;
-}
-
-#message{
-    padding: 20px;
-    text-align: center;
-    color: rgba(94, 30, 30, 0.712);
+    transform: background-color 0.3s ease;
 }
 
 .redirection-text{
     text-align: center;
+    margin: 20px;
 }
-
 a{
     text-decoration: none;
+}
+#message {
+    color: red;
+    text-align: center;
 }
