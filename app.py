@@ -19,7 +19,6 @@ if not os.path.exists(UPLOAD_FOLDER):
     os.makedirs(UPLOAD_FOLDER)
 
 # Definición de los modelos
-
 class User(db.Model):
     __tablename__ = 'users'
     id = db.Column(db.Integer, primary_key=True)
@@ -45,20 +44,12 @@ class Pokemon(db.Model):
 with app.app_context():
     db.create_all()
 
-# Ruta para la nueva página de inicio
+# Ruta basea
 @app.route('/')
 def home():
     return render_template('home.html')
 
-# Ruta para la página de registro
-@app.route('/register', methods=['GET'])
-def register_page():
-    return render_template('register.html')
-
-# Ruta para la página de inicio de sesión
-@app.route('/login', methods=['GET'])
-def login_page():
-    return render_template('login.html')
+### Todo relacionado a Pokémon como tal ###
 
 # Ruta para mostrar la página de estadísticas del Pokémon
 @app.route('/pokemon', methods=['GET'])
@@ -70,50 +61,18 @@ def show_pokemon():
 def index():
     return render_template('index.html')
 
-# Ruta para la página de perfil del usuario
-@app.route('/profile', methods=['GET'])
-def profile_page():
-    try:
-        if 'user_id' not in session:
-            return redirect(url_for('login_page'))
-        
-        user = User.query.get(session['user_id'])
-        return render_template('profile.html', user=user)
-    except Exception as e:
-        return jsonify(message=f'Error loading profile page: {str(e)}'), 500
 
-@app.route('/profile', methods=['POST'])
-def update_profile():
-    try:
-        if 'user_id' not in session:
-            return redirect(url_for('login_page'))
+### Todo relacionado a Login / Registro ###
 
-        user = User.query.get(session['user_id'])
-        username = request.form.get('username')
-        description = request.form.get('description')
+# Ruta para la página de registro
+@app.route('/register', methods=['GET'])
+def register_page():
+    return render_template('register.html')
 
-        # Verificar si se ha subido una nueva foto de perfil
-        if 'profile_picture' in request.files:
-            profile_picture = request.files['profile_picture']
-            if profile_picture.filename != '':
-                # Eliminar la foto de perfil anterior si no es la por defecto
-                if user.profile_picture != 'uploads/default_profile.png':
-                    old_picture_path = os.path.join(app.config['UPLOAD_FOLDER'], user.profile_picture.split('/')[-1])
-                    if os.path.exists(old_picture_path):
-                        os.remove(old_picture_path)
-                
-                file_path = os.path.join(app.config['UPLOAD_FOLDER'], profile_picture.filename)
-                profile_picture.save(file_path)
-                user.profile_picture = 'uploads/' + profile_picture.filename
-
-        user.username = username
-        user.description = description
-
-        db.session.commit()
-
-        return redirect(url_for('profile_page'))
-    except Exception as e:
-        return jsonify(message=f'Error updating profile: {str(e)}'), 500
+# Ruta para la página de inicio de sesión
+@app.route('/login', methods=['GET'])
+def login_page():
+    return render_template('login.html')
 
 @app.route('/register', methods=['POST'])
 def register_user():
@@ -154,64 +113,22 @@ def login_user():
     except Exception as e:
         return jsonify(message=f'Error logging in: {str(e)}'), 500
 
-# Ruta para la página de crear equipos
-@app.route('/team', methods=['GET'])
-def create_team_page():
-    return render_template('team.html')
-
-@app.route('/team', methods=['POST'])
-def create_team():
+### RUTA NUEVA TRAINER ###
+# Ruta principal que muestra la página del entrenador
+@app.route('/trainer', methods=['GET'])
+def trainer_page():
     try:
         if 'user_id' not in session:
-            return jsonify(message='User not logged in'), 401
+            return redirect(url_for('login_page'))
 
-        data = request.json
-        existing_team = Team.query.filter_by(name=data['name']).first()
-        if existing_team:
-            return jsonify(message='Team name already exists'), 400
-
-        new_team = Team(name=data['name'], user_id=session['user_id'])
-        db.session.add(new_team)
-        db.session.commit()
-
-        return jsonify(message='Team created successfully', team_id=new_team.id), 201
+        user = User.query.get(session['user_id'])
+        teams = Team.query.filter_by(user_id=session['user_id']).all()
+        return render_template('trainer.html', user=user, teams=teams)
     except Exception as e:
-        return jsonify(message=f'Error creating team: {str(e)}'), 500
+        return jsonify(message=f'Error loading trainer page: {str(e)}'), 500
 
-@app.route('/team/<int:team_id>/pokemon', methods=['POST'])
-def add_pokemon_to_team(team_id):
-    try:
-        if 'user_id' not in session:
-            return jsonify(message='User not logged in'), 401
-
-        team = Team.query.get_or_404(team_id)
-        if team.user_id != session['user_id']:
-            return jsonify(message='Unauthorized'), 403
-
-        if len(team.pokemons) >= 6:
-            return jsonify(message='Team already has 6 pokemons'), 400
-
-        data = request.json
-        new_pokemon = Pokemon(pokemon_id=data['pokemon_id'], team_id=team_id)
-        db.session.add(new_pokemon)
-        db.session.commit()
-
-        return jsonify(message='Pokemon added to team successfully'), 201
-    except Exception as e:
-        return jsonify(message=f'Error adding pokemon to team: {str(e)}'), 500
-
-@app.route('/team/<int:team_id>/pokemons', methods=['GET'])
-def get_team_pokemons(team_id):
-    try:
-        team = Team.query.get_or_404(team_id)
-        pokemons = Pokemon.query.filter_by(team_id=team.id).all()
-        pokemon_list = [{"id": pokemon.id, "pokemon_id": pokemon.pokemon_id} for pokemon in pokemons]
-        return jsonify(pokemon_list), 200
-    except Exception as e:
-        return jsonify({"error": str(e)}), 500
-
-@app.route('/teams', methods=['GET'])
-def get_teams():
+@app.route('/teams_trainer', methods=['GET'])
+def get_Teams():
     try:
         if 'user_id' not in session:
             return jsonify(message='User not logged in'), 401
@@ -238,8 +155,62 @@ def get_teams_with_pokemons():
     except Exception as e:
         return jsonify({"error": str(e)}), 500
 
-@app.route('/team/<int:team_id>/pokemon/<int:pokemon_id>', methods=['DELETE'])
-def delete_pokemon_from_team(team_id, pokemon_id):
+@app.route('/trainer', methods=['POST'])
+def trainer_actions():
+    try:
+        # FUNCIONA
+        if 'user_id' not in session:
+            return jsonify(message='User not logged in'), 401
+
+        action = request.form.get('action') or request.json.get('action')
+
+        # FUNCIONA
+        if action == 'update_profile':
+            username = request.form.get('username')
+            description = request.form.get('description')
+
+            user = User.query.get(session['user_id'])
+
+            if 'profile_picture' in request.files:
+                profile_picture = request.files['profile_picture']
+                if profile_picture.filename != '':
+                    if user.profile_picture != 'uploads/default_profile.png':
+                        old_picture_path = os.path.join(app.config['UPLOAD_FOLDER'], user.profile_picture.split('/')[-1])
+                        if os.path.exists(old_picture_path):
+                            os.remove(old_picture_path)
+
+                    file_path = os.path.join(app.config['UPLOAD_FOLDER'], profile_picture.filename)
+                    profile_picture.save(file_path)
+                    user.profile_picture = 'uploads/' + profile_picture.filename
+
+            user.username = username
+            user.description = description
+            db.session.commit()
+
+            return jsonify(message='Profile updated successfully'), 200
+        
+        # FUNCIONA
+        elif action == 'create_team':
+            team_name = request.json.get('team_name')
+
+            existing_team = Team.query.filter_by(name=team_name, user_id=session['user_id']).first()
+            if existing_team:
+                return jsonify(message='Team name already exists'), 400
+
+            new_team = Team(name=team_name, user_id=session['user_id'])
+            db.session.add(new_team)
+            db.session.commit()
+
+            return jsonify(message='Team created successfully', team_id=new_team.id), 201
+
+        else:
+            return jsonify(message='Invalid action'), 400
+
+    except Exception as e:
+        return jsonify(message=f'Error processing action: {str(e)}'), 500
+
+@app.route('/trainer/<int:team_id>/pokemon', methods=['POST'])
+def add_pokemon_to_team(team_id):
     try:
         if 'user_id' not in session:
             return jsonify(message='User not logged in'), 401
@@ -248,16 +219,31 @@ def delete_pokemon_from_team(team_id, pokemon_id):
         if team.user_id != session['user_id']:
             return jsonify(message='Unauthorized'), 403
 
-        pokemon = Pokemon.query.filter_by(team_id=team_id, pokemon_id=pokemon_id).first_or_404()
-        db.session.delete(pokemon)
+        if len(team.pokemons) >= 6:
+            return jsonify(message='Team already has 6 pokemons'), 400
+
+        data = request.json
+        new_pokemon = Pokemon(pokemon_id=data['pokemon_id'], team_id=team_id)
+        db.session.add(new_pokemon)
         db.session.commit()
 
-        return jsonify(message='Pokemon removed from team successfully'), 200
+        return jsonify(message='Pokemon added to team successfully'), 201
     except Exception as e:
-        return jsonify(message=f'Error removing pokemon from team: {str(e)}'), 500
+        return jsonify(message=f'Error adding pokemon to team: {str(e)}'), 500
 
-@app.route('/team/<int:team_id>', methods=['DELETE'])
-def delete_team(team_id):
+@app.route('/trainer/<int:team_id>', methods=['PUT'])
+def update_team_name(team_id):
+    try:
+        data = request.json
+        team = Team.query.get_or_404(team_id)
+        team.name = data['name']
+        db.session.commit()
+        return jsonify(message='Team name updated successfully'), 200
+    except Exception as e:
+        return jsonify(message=f'Error updating team name: {str(e)}'), 500
+
+@app.route('/trainer/<int:team_id>', methods=['DELETE'])
+def delete_Team(team_id):
     try:
         if 'user_id' not in session:
             return jsonify(message='User not logged in'), 401
@@ -275,24 +261,26 @@ def delete_team(team_id):
         return jsonify(message='Team and its pokemons deleted successfully'), 200
     except Exception as e:
         return jsonify(message=f'Error deleting team: {str(e)}'), 500
-    
-@app.route('/team/<int:team_id>', methods=['PUT'])
-def update_team_name(team_id):
+   
+@app.route('/trainer/<int:team_id>/pokemon/<int:pokemon_id>', methods=['DELETE'])
+def delete_pokemon_team(team_id, pokemon_id):
     try:
         if 'user_id' not in session:
             return jsonify(message='User not logged in'), 401
 
-        data = request.json
         team = Team.query.get_or_404(team_id)
         if team.user_id != session['user_id']:
             return jsonify(message='Unauthorized'), 403
 
-        team.name = data['name']
+        pokemon = Pokemon.query.filter_by(team_id=team_id, pokemon_id=pokemon_id).first_or_404()
+        db.session.delete(pokemon)
         db.session.commit()
 
-        return jsonify(message='Team name updated successfully'), 200
+        return jsonify(message='Pokemon removed from team successfully'), 200
     except Exception as e:
-        return jsonify(message=f'Error updating team name: {str(e)}'), 500
+        return jsonify(message=f'Error removing pokemon from team: {str(e)}'), 500
+
+### Todo relacionado a Equipos Pokémon ###
 
 if __name__ == '__main__':
     app.run(debug=True)
