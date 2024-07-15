@@ -14,8 +14,14 @@ body {
     height: 100%;
     margin: 0;
     padding: 0;
-    background-color: var(--dark-cyan);
+    /* background-color: var(--dark-cyan); */
     color: var(--white);
+    background-image: url('/static/uploads/arte-digital-hermosas-montanas.jpg');
+    background-attachment: fixed; /* La imagen se queda fija */
+    background-size: cover; /* Hace que la imagen cubra todo el fondo */
+    background-position: center; /* Centra la imagen en el fondo */
+    background-repeat: no-repeat; /* Evita que la imagen se repita */
+    min-height: 100vh; /* Asegura que el body ocupe al menos toda la altura de la ventana */
 }
 
 header {
@@ -108,8 +114,9 @@ main {
     padding: 32px;
     max-width: 1000px;
     margin: 0 auto;
-    min-height: 100vh;
+    min-height: calc(100vh - 100px); /* Ajusta la altura mínima del main */
     background-color: var(--very-dark-desaturated_blue);
+    overflow: auto;
 }
 
 .list_pokemons {
@@ -254,4 +261,3 @@ main {
     border: none;
     color: white;
 }
-
