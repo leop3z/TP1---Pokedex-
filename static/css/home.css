@@ -6,6 +6,12 @@ body {
     background-color: #f7f7f7;
     font-family: Arial, sans-serif;
     margin: 0;
+    background-image: url('/static/img/background.jpg');
+    background-attachment: fixed; /* La imagen se queda fija */
+    background-size: cover; /* Hace que la imagen cubra todo el fondo */
+    background-position: center;
+    background-repeat: no-repeat; /* Evita que la imagen se repita */
+    min-height: 100vh; /* Asegura que el body ocupe al menos toda la altura de la ventana */
 }
 
 .home-container {
