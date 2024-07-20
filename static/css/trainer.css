@@ -42,14 +42,11 @@ header {
     color: var(--white);
 }
 
-.title {
-    text-align: center;
-    font-size: 36px;
-    padding-left: 60px;
-    text-transform: uppercase;
-    letter-spacing: 2px;
-    color: var(--white);
-}
+#pokemon-logo{
+    width: 50%;
+    margin: 0 auto;
+  }
+  
 
 .other-pages {
     height: 60px;
