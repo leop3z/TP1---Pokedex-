@@ -33,14 +33,13 @@ body {
 /* Encabezado */
 header {
   width: 100%;
-  height: 100%;
   display: flex;
   justify-content: space-between;
   align-items: center;
   padding: 32px;
   max-width: 1000px;
   margin: 0 auto;
-  background-color: var(--dark-grayish-blue);
+  background-color: var(--very-dark-desaturated-blue);
   color: var(--white);
 }
 
@@ -144,7 +143,6 @@ main {
   padding: 10px;
 }
 
-
 /* Contenido del Pokémon */
 .pokemon_content {
   background-color: var(--dark-grayish);
@@ -179,7 +177,6 @@ main {
   margin-left: 13%;
   margin-right: 13%;
 }
-
 
 /* Tipos de Pokémon */
 .pokemon_types {
@@ -364,7 +361,6 @@ main {
   background-color: var(--dark-grayish-blue);
 }
 
-
 /* Acciones del equipo */
 .team-actions {
   display: flex;
@@ -402,4 +398,73 @@ main {
 
 .team-actions button:hover {
   background-color: var(--dark-cyan)
+}
+
+/* Media queries para dispositivos móviles */
+@media (max-width: 768px) {
+  header {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .title {
+    font-size: 28px;
+    padding: 10px 0;
+  }
+
+  .links {
+    flex-direction: row;
+    align-items: center;
+  }
+
+  .page {
+    font-size: 16px;
+    padding: 8px;
+  }
+
+  main {
+    padding: 16px;
+  }
+
+  .container {
+    width: 100%;
+    height: auto;
+  }
+
+  .pokemon_img img {
+    width: 150px;
+  }
+
+  .pokemon_height,
+  .pokemon_weight {
+    width: 100%;
+  }
+
+  .table {
+    flex-direction: column;
+    align-items: center;
+    margin: 10px;
+  }
+
+  .pokemon_table {
+    width: 100%;
+    font-size: 14px;
+  }
+
+  .team-actions {
+    flex-direction: column;
+    align-items: stretch;
+    padding: 20px;
+  }
+
+  .team-actions select {
+    width: 100%;
+    margin-bottom: 10px;
+  }
+
+  .team-actions button {
+    width: 100%;
+    font-size: 16px;
+    padding: 10px;
+  }
 }
