@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Trainer</title>
+    <link rel="stylesheet" href="/static/css/trainer.css">
+</head>
+
+<body>
+    <header>
+        <img id="pokemon-logo" src="/static/uploads/Pok-dexn-t-11-7-2024.png">
+        <nav class="other-pages">
+            <ul class="links">
+                <li class="page"><a href="/index">Home</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+
+        <div id="profile-section">
+            <div class="profile-container">
+                <h2 class="section-title">Profile</h2>
+                <form action="/profile" method="POST" enctype="multipart/form-data">
+                    <div class="picture-profile">
+                        <label for="profile_picture">Profile Picture:</label>
+                        <div class="picture">
+                            <img src="{{ url_for('static', filename=user.profile_picture) }}" alt="Profile Picture" id="current-profile-picture" width="150" height="150">
+                        </div>
+                        <input type="file" id="profile_picture" name="profile_picture">
+                    </div>
+                    
+                    <div class="details-profile">
+                        <div class="username-profile">
+                            <label for="username">Username:</label>
+                            <input type="text" id="username" name="username" value="{{ user.username }}" required>
+                        </div>
+
+                        <div class="description-profile">
+                            <label for="description">Description:</label>
+                            <textarea id="description" name="description">{{ user.description }}</textarea>
+                        </div>
+                        <button type="submit">Update Profile</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <div id="team-section">
+            <h2 class="section-title">Create Your Pokémon Team</h2>
+            <div class="team-name">
+                <label for="team-name">Team Name:</label>
+                <input type="text" id="team-name" placeholder="Enter team name">
+                <button id="create-team" class="btn">Create Team</button>
+            </div>
+            <div id="teams-container">
+                <!-- Aquí se mostrarán todos los equipos con sus Pokémon -->
+            </div>
+        </div>
+    </main>
+
+    <script src="/static/js/trainer.js"></script>
+</body>
+
+</html>

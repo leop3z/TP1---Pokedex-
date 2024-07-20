@@ -18,7 +18,12 @@ body{
     align-items: center;
     justify-content: center;
     height: 100vh;
-    background-color: var(--dark-cyan);
+    background-image: url('/static/img/background.jpg');
+    background-attachment: fixed; /* La imagen se queda fija */
+    background-size: cover; /* Hace que la imagen cubra todo el fondo */
+    background-position: center;
+    background-repeat: no-repeat; /* Evita que la imagen se repita */
+    min-height: 100vh; /* Asegura que el body ocupe al menos toda la altura de la ventana */
 }
 
 form{

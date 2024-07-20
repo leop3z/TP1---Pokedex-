@@ -1,5 +1,5 @@
 // Obtener la lista de equipos y llenar el dropdown
-fetch('/teams')
+fetch('/teams_trainer')
     .then(response => response.json())
     .then(teams => {
         const dropdown = document.getElementById('team-dropdown');
@@ -66,7 +66,7 @@ function create_pokemon(pokemons) {
         agregar_equipo.addEventListener("click", () => {
             const selected_team_id = document.getElementById('team-dropdown').value;
             if (selected_team_id) {
-                fetch(`/team/${selected_team_id}/pokemon`, {
+                fetch(`/trainer/${selected_team_id}/pokemon`, {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',

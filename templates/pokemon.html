@@ -6,49 +6,68 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Pokemon Details</title>
     <link rel="stylesheet" href="/static/css/pokemon.css">
-    <script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
 </head>
 
 <body>
     <header>
-        <h1 class="title">Pokedexn't</h1>
+        <img id="pokemon-logo" src="/static/uploads/Pok-dexn-t-11-7-2024.png">
         <nav class="other-pages">
             <ul class="links">
-                <li class="page"><a href="/">Home</a></li>
-                <li class="page"><a href="/team">Teams</a></li>
+                <li class="page"><a href="/index">Home</a></li>
+                <li class="page"><a href="/trainer">Trainer</a></li>
             </ul>
         </nav>
     </header>
 
-    <main class="pokemon_details">
-        <div class="container">
-            <div class="pokemon__header">
-                <h1 id="pokemon_name" class="pokemon__name">Nombre del Pokémon</h1>
-                <div class="pokemon_img">
-                    <img id="pokemon_image" src="" alt="Pokemon Image">
+    <main class="pokemon_container">
+
+        <div id="pokemon_container">
+            <div class="container">
+                
+                <div class="pokemon_header">
+                    <div class="pokemon_id">
+                        <h2> ID </h2>
+                    </div>
+                    <h1 class="pokemon__name"> Name </h1>
+                    <div class="pokemon_img">
+                        <img id="pokemon_image" src="Img Pokemon" alt="${pokemon.name}">
+                    </div>
+                </div>
+
+                <div class="pokemon_content">
+                    <div class="pokemon_description"> Description </div>
+                    
+                    <div class="pokemon_features">
+                        <div class="pokemon_height">Height: m </div>
+                        <div class="pokemon_weight">Weight: kg</div>
+                    </div>
+
+                    <div class="pokemon_types" id="pokemon_types">
+                        <div class="pokemon_type">
+                            ${pokemon.types.map(type => `<img class="type-icon ${type}" src="/static/img/types/${type}.svg" alt="${type}">`).join('')}
+                        </div>
+                    </div>
+                    
+                    <div class="table">
+                        <div class="pokemon_table" id="pokemon_table">
+                            <!-- Aquí va la tabla con más detalles  -->
+                        </div>
+                    </div>
+                
                 </div>
             </div>
-            <div class="pokemon_content">
-                <div class="pokemon__description">
-                    <div id="pokemon_description">Descripción del Pokémon aquí.</div>
-                </div>
-                <div class="pokemon__features">
-                    <div class="pokemon__id" id="pokemon_id">ID: 1</div>
-                    <div class="pokemon__height" id="pokemon_height">Altura: 0.7m</div>
-                    <div class="pokemon__weight" id="pokemon_weight">Peso: 6.9kg</div>
-                    <div class="pokemon__types" id="pokemon_types">Tipos del Pokémon aquí.</div>
-                </div>
-                <div class="pokemon__table" id="pokemon_table">
-                    <!-- Aquí va la tabla con más detalles -->
-                </div>
-            </div>
+
+
         </div>
+        
         <div class="team-actions">
             <label for="team-dropdown">Select a team:</label>
             <select id="team-dropdown"></select>
             <button id="add-to-team">Add to the team</button>
             <button id="remove-from-team">Delete from the team</button>
         </div>
+    
+        
     </main>
 
     <script src="/static/js/pokemon.js"></script>
