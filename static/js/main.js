@@ -114,3 +114,4 @@ fetch('https://pokeapi.co/api/v2/pokemon?limit=151')
     .then(data_pokemon)
     .then(create_pokemon)
     .catch(err => console.error(err));
+

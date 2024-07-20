@@ -55,7 +55,7 @@ document.addEventListener("DOMContentLoaded", () => {
                     pokemonCount.textContent = `(${team.pokemons.length}/6)`;
 
                     const deleteTeamButton = document.createElement('button');
-                    deleteTeamButton.textContent = 'Eliminar equipo';
+                    deleteTeamButton.textContent = 'Delete team';
                     deleteTeamButton.classList.add('delete-team-button');
                     deleteTeamButton.addEventListener('click', () => {
                         fetch(`/team/${team.id}`, {

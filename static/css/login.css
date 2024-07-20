@@ -1,0 +1,89 @@
+:root {
+    --dark-cyan: hsl(185, 75%, 39%);
+    --very-dark-desaturated_blue: hsl(229, 23%, 23%);
+    --dark-grayish-blue: hsl(227, 10%, 46%);
+    --dark-gray: hsl(0, 0%, 59%);
+  }
+
+
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    font-family: Helvetica, sans-serif;
+    background-color: var(--dark-cyan);
+}
+
+.login-container {
+    background-color: rgb(112, 144, 172);
+    border-radius: 15px;
+    box-shadow: 0 0 20px rgba(0,0,0, 0.3);
+    padding: 40px;
+    display: flex;
+    flex-direction: column;
+    width: 600px;
+}
+
+.login-container h2 {
+    text-align: center;
+    padding-bottom: 20px;
+    color: rgb(255, 255, 255);
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+}
+
+label {
+    padding-bottom: 10px;
+    padding-top: 10px;
+    font-size: 18px;
+    color: aliceblue;
+}
+
+input {
+    border-radius: 5px;
+    border: 1px;
+    height: 45px;
+    padding-left: 5px;
+    font-size: 16px;
+    background-color: rgb(255, 255, 255);
+}
+
+input::placeholder{
+    font-size: 16px;
+}
+
+.btn-log-in {
+    margin-top: 24px;
+    padding: 10px;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+    width: 100%;
+    background-color: rgb(212, 208, 208);
+    color: rgb(126, 124, 124);
+    font-weight: bold;
+    transform: background-color 0.3s ease;
+}
+
+.redirection-text{
+    text-align: center;
+    margin: 20px;
+}
+a{
+    text-decoration: none;
+}
+#message {
+    color: red;
+    text-align: center;
+}

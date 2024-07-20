@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -16,14 +15,14 @@
         }
     </script>
 </head>
-
 <body>
     <header>
         <h1 class="title">Pokedexn't</h1>
         <nav class="other-pages">
             <ul class="links">
-                <li class="page"><a href="/">Home</a></li>
+                <li class="page"><a href="/index">Home</a></li>
                 <li class="page"><a href="/team">Teams</a></li>
+                <li class="page"><a href="/profile">Entrenador</a></li>
                 <li class="page">
                     <select id="team-dropdown">
                         <option value="">Select a Team</option>
@@ -32,7 +31,6 @@
             </ul>
         </nav>
     </header>
-
     <main>
         <div class="search">
             <form onsubmit="redirect_pokemon_page()">
@@ -40,12 +38,9 @@
                 <button class="search_id" type="submit">Search</button>
             </form>
         </div>
-
         <div class="list_pokemons">
         </div>
     </main>
-
     <script src="/static/js/main.js"></script>
 </body>
-
 </html>
