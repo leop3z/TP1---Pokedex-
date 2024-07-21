@@ -24,7 +24,7 @@ class User(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String(100), nullable=False, unique=True)
     password = db.Column(db.String(200), nullable=False)
-    profile_picture = db.Column(db.String(200), default='uploads/default_profile.jng')
+    profile_picture = db.Column(db.String(200), default='uploads/default_profile.jpg')
     description = db.Column(db.String(200), default='')
     teams = db.relationship('Team', backref='user', lazy=True)
 
@@ -178,7 +178,7 @@ def trainer_actions():
             if 'profile_picture' in request.files:
                 profile_picture = request.files['profile_picture']
                 if profile_picture.filename != '':
-                    if user.profile_picture != 'uploads/default_profile.png':
+                    if user.profile_picture != 'uploads/default_profile.jpg':
                         old_picture_path = os.path.join(app.config['UPLOAD_FOLDER'], user.profile_picture.split('/')[-1])
                         if os.path.exists(old_picture_path):
                             os.remove(old_picture_path)
