@@ -44,7 +44,7 @@ class Pokemon(db.Model):
 with app.app_context():
     db.create_all()
 
-# Ruta basea
+# Ruta base
 @app.route('/')
 def home():
     return render_template('home.html')
@@ -113,6 +113,12 @@ def login_user():
     except Exception as e:
         return jsonify(message=f'Error logging in: {str(e)}'), 500
 
+# Ruta para cerrar sesión
+@app.route('/logout', methods=['GET'])
+def logout():
+    session.pop('user_id', None)
+    return redirect(url_for('home'))
+
 ### RUTA NUEVA TRAINER ###
 # Ruta principal que muestra la página del entrenador
 @app.route('/trainer', methods=['GET'])
@@ -158,13 +164,11 @@ def get_teams_with_pokemons():
 @app.route('/trainer', methods=['POST'])
 def trainer_actions():
     try:
-        # FUNCIONA
         if 'user_id' not in session:
             return jsonify(message='User not logged in'), 401
 
         action = request.form.get('action') or request.json.get('action')
 
-        # FUNCIONA
         if action == 'update_profile':
             username = request.form.get('username')
             description = request.form.get('description')
@@ -188,8 +192,7 @@ def trainer_actions():
             db.session.commit()
 
             return jsonify(message='Profile updated successfully'), 200
-        
-        # FUNCIONA
+
         elif action == 'create_team':
             team_name = request.json.get('team_name')
 
@@ -261,7 +264,7 @@ def delete_Team(team_id):
         return jsonify(message='Team and its pokemons deleted successfully'), 200
     except Exception as e:
         return jsonify(message=f'Error deleting team: {str(e)}'), 500
-   
+
 @app.route('/trainer/<int:team_id>/pokemon/<int:pokemon_id>', methods=['DELETE'])
 def delete_pokemon_team(team_id, pokemon_id):
     try:
