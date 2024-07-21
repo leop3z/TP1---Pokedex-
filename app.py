@@ -24,7 +24,7 @@ class User(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String(100), nullable=False, unique=True)
     password = db.Column(db.String(200), nullable=False)
-    profile_picture = db.Column(db.String(200), default='uploads/default_profile.png')
+    profile_picture = db.Column(db.String(200), default='uploads/default_profile.jng')
     description = db.Column(db.String(200), default='')
     teams = db.relationship('Team', backref='user', lazy=True)
 
