@@ -1,0 +1,101 @@
+body {
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    background-color: #f7f7f7;
+    color: #1c1c1c;
+    font-family: 'Kumbh Sans', sans-serif;
+}
+
+header {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 32px;
+    max-width: 1000px;
+    margin: 0 auto;
+    background-color: #1c1c1c;
+    color: #f7f7f7;
+}
+
+.other-pages {
+    height: 60px;
+}
+
+.links {
+    display: flex;
+    list-style: none;
+}
+
+.page {
+    padding: 10px;
+    margin: 5px;
+    font-size: 18px;
+    border-radius: 10px;
+    background-color: #6cb1db;
+    transition: transform 0.2s;
+}
+
+.page:hover {
+    transform: scale(1.1);
+}
+
+a {
+    text-decoration: none;
+    color: #f7f7f7;
+}
+
+main {
+    padding: 32px;
+    max-width: 1000px;
+    margin: 0 auto;
+    background-color: #f7f7f7;
+    color: #1c1c1c;
+}
+
+.trainers-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 16px;
+}
+
+.trainer-card {
+    background-color: #ececec;
+    border-radius: 10px;
+    padding: 16px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    width: 100%;
+}
+
+.trainer-card img {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+}
+
+.trainer-info {
+    flex-grow: 1;
+}
+
+.trainer-info h2 {
+    margin: 0;
+    font-size: 18px;
+}
+
+.details-button {
+    background-color: #6cb1db;
+    color: #f7f7f7;
+    padding: 8px 16px;
+    border-radius: 5px;
+    text-decoration: none;
+    transition: background-color 0.3s;
+}
+
+.details-button:hover {
+    background-color: #4a9bd3;
+}

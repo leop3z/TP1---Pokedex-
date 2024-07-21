@@ -283,6 +283,24 @@ def delete_pokemon_team(team_id, pokemon_id):
     except Exception as e:
         return jsonify(message=f'Error removing pokemon from team: {str(e)}'), 500
 
+
+@app.route('/all_trainers', methods=['GET'])
+def all_trainers():
+    try:
+        users = User.query.all()
+        return render_template('all_trainers.html', users=users)
+    except Exception as e:
+        return jsonify(message=f'Error loading trainers: {str(e)}'), 500
+
+@app.route('/trainer/<int:user_id>', methods=['GET'])
+def trainer_details(user_id):
+    try:
+        user = User.query.get_or_404(user_id)
+        teams = Team.query.filter_by(user_id=user.id).all()
+        return render_template('trainer_details.html', user=user, teams=teams)
+    except Exception as e:
+        return jsonify(message=f'Error loading trainer details: {str(e)}'), 500
+
 ### Todo relacionado a Equipos Pokémon ###
 
 if __name__ == '__main__':
