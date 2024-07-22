@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/static/css/all_trainers.css">
+    <title>All Trainers</title>
+</head>
+
+<body>
+    <header>
+        <a href="/index">
+            <img id="pokemon-logo" src="/static/img/Pok-dexn-t-11-7-2024.png" alt="Pokedexn't Logo">
+        </a>
+        <nav class="other-pages">
+            <ul class="links">
+                <li class="page"><a href="/trainer">Trainer</a></li>
+                <li class="page"><a href="/logout">Logout</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    
+    <main>
+        <h1>All Trainers</h1>
+        <div class="trainers-list">
+            {% for user in users %}
+            <div class="trainer-card">
+                <img src="{{ url_for('static', filename=user.profile_picture) }}" alt="Profile Picture">
+                <div class="trainer-info">
+                    <h2>{{ user.username }}</h2>
+                    <a href="/trainer/{{ user.id }}" class="details-button">More Details</a>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </main>
+</body>
+</html>

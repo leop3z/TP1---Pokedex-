@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Trainer Details</title>
+    <link rel="stylesheet" href="/static/css/trainer.css">
+</head>
+
+<body>
+    <header>
+        <a href="/index">
+            <img id="pokemon-logo" src="/static/img/Pok-dexn-t-11-7-2024.png" alt="Pokedexn't Logo">
+        </a>
+        <nav class="other-pages">
+            <ul class="links">
+                <li class="page"><a href="/all_trainers">All Trainers</a></li>
+                <li class="page"><a href="/logout">Logout</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <div id="profile-section">
+            <div class="profile-container">
+                <h2 class="section-title">Profile</h2>
+                <div class="picture-profile">
+                    <label for="profile_picture">Profile Picture:</label>
+                    <div class="picture">
+                        <img src="{{ url_for('static', filename=user.profile_picture) }}" alt="Profile Picture" id="current-profile-picture" width="150" height="150">
+                    </div>
+                </div>
+                <div class="details-profile-details">
+                    <div class="username-profile-details">
+                        <label for="username">Username:</label>
+                        <p class="username-info">{{ user.username }}</p>
+                    </div>
+                    <div class="description-profile-details">
+                        <label for="description">Description:</label>
+                        <p class="description-info">{{ user.description }}</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="team-section">
+            <h2 class="section-title">Teams</h2>
+            <div id="teams-container">
+                <!-- Aquí se mostrarán todos los equipos con sus Pokémon -->
+            </div>
+        </div>
+    </main>
+
+    <script src="/static/js/trainer_details.js"></script>
+</body>
+
+</html>

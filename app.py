@@ -283,6 +283,37 @@ def delete_pokemon_team(team_id, pokemon_id):
     except Exception as e:
         return jsonify(message=f'Error removing pokemon from team: {str(e)}'), 500
 
+
+@app.route('/all_trainers', methods=['GET'])
+def all_trainers():
+    try:
+        users = User.query.all()
+        return render_template('all_trainers.html', users=users)
+    except Exception as e:
+        return jsonify(message=f'Error loading trainers: {str(e)}'), 500
+
+@app.route('/trainer/<int:user_id>', methods=['GET'])
+def trainer_details(user_id):
+    try:
+        user = User.query.get_or_404(user_id)
+        teams = Team.query.filter_by(user_id=user.id).all()
+        return render_template('trainer_details.html', user=user, teams=teams)
+    except Exception as e:
+        return jsonify(message=f'Error loading trainer details: {str(e)}'), 500
+
+@app.route('/trainer/<int:user_id>/teams_with_pokemons', methods=['GET'])
+def get_trainer_teams_with_pokemons(user_id):
+    try:
+        teams = Team.query.filter_by(user_id=user_id).all()
+        teams_with_pokemons = []
+        for team in teams:
+            pokemons = Pokemon.query.filter_by(team_id=team.id).all()
+            pokemon_list = [{"pokemon_id": pokemon.pokemon_id} for pokemon in pokemons]
+            teams_with_pokemons.append({"id": team.id, "name": team.name, "pokemons": pokemon_list})
+        return jsonify(teams_with_pokemons), 200
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
+
 ### Todo relacionado a Equipos Pokémon ###
 
 if __name__ == '__main__':
