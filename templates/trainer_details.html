@@ -31,14 +31,14 @@
                         <img src="{{ url_for('static', filename=user.profile_picture) }}" alt="Profile Picture" id="current-profile-picture" width="150" height="150">
                     </div>
                 </div>
-                <div class="details-profile">
-                    <div class="username-profile">
+                <div class="details-profile-details">
+                    <div class="username-profile-details">
                         <label for="username">Username:</label>
-                        <p>{{ user.username }}</p>
+                        <p class="username-info">{{ user.username }}</p>
                     </div>
-                    <div class="description-profile">
+                    <div class="description-profile-details">
                         <label for="description">Description:</label>
-                        <p>{{ user.description }}</p>
+                        <p class="description-info">{{ user.description }}</p>
                     </div>
                 </div>
             </div>
