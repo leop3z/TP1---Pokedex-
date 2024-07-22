@@ -40,41 +40,59 @@ header {
   max-width: 1000px;
   margin: 0 auto;
   background-color: var(--very-dark-desaturated-blue);
-  color: var(--white);
+  box-shadow: 0 4px 8px var(--shadow);
+  flex-wrap: wrap ;
 }
 
-#pokemon-logo{
-  width: 50%;
-  margin: 0 auto;
+#pokemon-logo {
+  width: 280px;
+  max-width: 100%;
+  
 }
-
 
 .other-pages {
-  height: 40px;
+  flex-grow: 1;
+  display: flex;
+  justify-content: flex-end;
+  flex-wrap: wrap;
 }
 
 .links {
   display: flex;
+  align-items: center;
   list-style: none;
+  gap: 20px;
+  box-sizing: border-box;
+  flex-wrap: wrap;
 }
 
 .page {
-  padding: 10px;
-  margin: 8px;
   font-size: 18px;
+  position: relative;
+  padding: 10px;
+  margin: 10px;
   border-radius: 10px;
   background-color: var(--dark-cyan);
-  transition: transform 0.2s;
+  transition: transform 0.2s, background-color 0.3s;  
 }
 
 .page:hover {
-  transform: scale(1.1);
+  transform: translateY(-2px);
 }
 
 a {
   text-decoration: none;
+  color: var(--white);
   font-family: sans-serif;
+  padding: 10px 15px;
+  border-radius: 5px;
+  transition: background-color 0.3s;
 }
+
+a:hover {
+  background-color: var(--dark-grayish-blue);
+}
+
 
 /* Contenido principal */
 main {

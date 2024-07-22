@@ -234,7 +234,7 @@ button[type="submit"]:hover {
     padding: 10px;
     border-radius: 5px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
-    max-width: 250px;
+    max-width: 230px;
     width: 100%;
     margin: 0 auto; 
     font-size: 18px;
@@ -246,9 +246,9 @@ button[type="submit"]:hover {
     padding: 10px;
     border-radius: 5px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
-    width: 100%; 
+    width: 85%; 
     margin: 0 auto;
-    font-size: 14px;
+    font-size: 17px;
     word-wrap: break-word; 
 }
 
