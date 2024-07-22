@@ -301,6 +301,19 @@ def trainer_details(user_id):
     except Exception as e:
         return jsonify(message=f'Error loading trainer details: {str(e)}'), 500
 
+@app.route('/trainer/<int:user_id>/teams_with_pokemons', methods=['GET'])
+def get_trainer_teams_with_pokemons(user_id):
+    try:
+        teams = Team.query.filter_by(user_id=user_id).all()
+        teams_with_pokemons = []
+        for team in teams:
+            pokemons = Pokemon.query.filter_by(team_id=team.id).all()
+            pokemon_list = [{"pokemon_id": pokemon.pokemon_id} for pokemon in pokemons]
+            teams_with_pokemons.append({"id": team.id, "name": team.name, "pokemons": pokemon_list})
+        return jsonify(teams_with_pokemons), 200
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
+
 ### Todo relacionado a Equipos Pokémon ###
 
 if __name__ == '__main__':

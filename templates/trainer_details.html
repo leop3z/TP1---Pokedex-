@@ -4,8 +4,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="/static/css/trainer.css">
     <title>Trainer Details</title>
+    <link rel="stylesheet" href="/static/css/trainer.css">
 </head>
 
 <body>
@@ -15,7 +15,6 @@
         </a>
         <nav class="other-pages">
             <ul class="links">
-                <li class="page"><a href="/trainer">Trainer</a></li>
                 <li class="page"><a href="/all_trainers">All Trainers</a></li>
                 <li class="page"><a href="/logout">Logout</a></li>
             </ul>
@@ -23,24 +22,23 @@
     </header>
 
     <main>
-
         <div id="profile-section">
             <div class="profile-container">
                 <h2 class="section-title">Profile</h2>
                 <div class="picture-profile">
+                    <label for="profile_picture">Profile Picture:</label>
                     <div class="picture">
                         <img src="{{ url_for('static', filename=user.profile_picture) }}" alt="Profile Picture" id="current-profile-picture" width="150" height="150">
                     </div>
                 </div>
-
                 <div class="details-profile">
-                    <div class="username-profile-details">
+                    <div class="username-profile">
                         <label for="username">Username:</label>
-                        <p class="username-info">{{ user.username }}</p>
+                        <p>{{ user.username }}</p>
                     </div>
-                    <div class="description-profile-details">
+                    <div class="description-profile">
                         <label for="description">Description:</label>
-                        <p class="description-info">{{ user.description }}</p>
+                        <p>{{ user.description }}</p>
                     </div>
                 </div>
             </div>
@@ -49,24 +47,12 @@
         <div id="team-section">
             <h2 class="section-title">Teams</h2>
             <div id="teams-container">
-                {% for team in teams %}
-                <div class="team">
-                    <div class="team-header">
-                        <h2>{{ team.name }}</h2>
-                        <span class="pokemon-count">{{ team.pokemons|length }}/6</span>
-                    </div>
-                    <div class="pokemons-container">
-                        {% for pokemon in team.pokemons %}
-                        <div class="pokemon">
-                            <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/{{ pokemon.pokemon_id }}.png" alt="Pokemon">
-                            <p>Pokemon {{ pokemon.pokemon_id }}</p>
-                        </div>
-                        {% endfor %}
-                    </div>
-                </div>
-                {% endfor %}
+                <!-- Aquí se mostrarán todos los equipos con sus Pokémon -->
             </div>
         </div>
     </main>
+
+    <script src="/static/js/trainer_details.js"></script>
 </body>
+
 </html>
