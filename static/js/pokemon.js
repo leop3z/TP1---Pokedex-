@@ -1,15 +1,15 @@
 document.addEventListener("DOMContentLoaded", () => {
     const urlParams = new URLSearchParams(window.location.search);
-    const pokemonId = urlParams.get('id');
+    const param = urlParams.get('id');
 
-    const urlPokemons = `https://pokeapi.co/api/v2/pokemon/${pokemonId}`;
-    const urlInfoPokemons = `https://pokeapi.co/api/v2/pokemon-species/${pokemonId}`;
-
+    const urlPokemons = `https://pokeapi.co/api/v2/pokemon/${param}`;
+    const urlInfoPokemons = `https://pokeapi.co/api/v2/pokemon-species/${param}`;
 
     function loadPokemonDetails() {
         fetch(urlPokemons)
             .then(response => response.json())
             .then(pokemon => {
+                const pokemonId = pokemon.id;
                 fetch(urlInfoPokemons)
                     .then(response => response.json())
                     .then(speciesData => {
@@ -25,6 +25,8 @@ document.addEventListener("DOMContentLoaded", () => {
                         };
                         createPokemon(pokemonData);
                         createPokemonTable(pokemonData);
+                        addEventListeners(pokemonId);
+
                     })
                     .catch(error => {
                         console.error('Error fetching species data:', error);
@@ -34,7 +36,7 @@ document.addEventListener("DOMContentLoaded", () => {
             .catch(error => {
                 console.error('Error fetching Pokémon data:', error);
                 alert('Failed to load Pokémon details. Please try again.');
-            });
+            });   
     }
 
     function createPokemon(pokemon) {
@@ -148,7 +150,7 @@ document.addEventListener("DOMContentLoaded", () => {
             .catch(err => console.error('Error fetching teams:', err));
     }
 
-    function addEventListeners() {
+    function addEventListeners(pokemonId) {
         document.getElementById('add-to-team').addEventListener('click', () => {
             const selectedTeamId = document.getElementById('team-dropdown').value;
             if (selectedTeamId) {
@@ -208,9 +210,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
 
-
     // Cargar detalles del Pokémon y el dropdown de equipos
     loadPokemonDetails();
     loadTeamsDropdown();
-    addEventListeners();
 });
